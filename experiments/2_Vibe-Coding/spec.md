@@ -1,0 +1,1 @@
+# TODO: Provide your own spec here. This is the blueprint for your app, and we will use it in the next experiments to generate tests and build the app. The more detailed and clear your spec is, the better results you will get in the next steps. You can use my sample spec as a reference, but try to write your own spec based on your vision of the app.
