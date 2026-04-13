@@ -135,6 +135,7 @@ dist
 .tmp
 
 playwright-report
+.playwright-cli
 
 test-results
 baselines

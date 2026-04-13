@@ -2,24 +2,29 @@
   "type": "commonjs",
   "dependencies": {
     "@ai-sdk/azure": "^2.0.7",
+    "@github/copilot-sdk": "^0.2.2",
+    "@playwright/cli": "^0.1.7",
     "@playwright/test": "~1.58.2",
     "@wopee-io/wopee.pw": "^4.22.0",
     "ai": "^5.0.8",
     "axios": "^1.11.0",
     "cli-table3": "^0.6.5",
-    "html-minifier-terser": "^7.2.0",
-    "parse5": "^7.3.0",
-    "speakeasy": "^2.0.0",
-    "typescript": "^5.8.3",
     "dotenv": "^16.4.5",
-    "lodash": "^4.17.21",
-    "proxy-from-env": "^1.1.0",
+    "html-minifier-terser": "^7.2.0",
     "http-proxy-agent": "^7.0.2",
-    "https-proxy-agent": "^7.0.6"
+    "https-proxy-agent": "^7.0.6",
+    "lodash": "^4.17.21",
+    "parse5": "^7.3.0",
+    "proxy-from-env": "^1.1.0",
+    "speakeasy": "^2.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.8.3"
   },
   "scripts": {
     "test": "npm run pw",
     "agent": "playwright test ./agents/run-agent.spec.ts --config playwright.config.ts",
+    "e4": "npx tsx experiments/4_AI-Agents/2-GitHubCopilotAgent/run.ts",
+    "e6": "npx tsx experiments/6_Intro-to-MCP/2-GitHubCopilotAgent/run.ts",
     "pw": "playwright test ./tests/ --config playwright.config.ts"
   },
   "prettier": {
