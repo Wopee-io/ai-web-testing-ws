@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Foodora - Food Delivery</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'hsl(0 0% 100%)',
+                        foreground: 'hsl(20 14.3% 4.1%)',
+                        card: {
+                            DEFAULT: 'hsl(0 0% 100%)',
+                            foreground: 'hsl(20 14.3% 4.1%)'
+                        },
+                        popover: {
+                            DEFAULT: 'hsl(0 0% 100%)',
+                            foreground: 'hsl(20 14.3% 4.1%)'
+                        },
+                        primary: {
+                            DEFAULT: 'hsl(16 100% 55%)',
+                            foreground: 'hsl(0 0% 98%)'
+                        },
+                        secondary: {
+                            DEFAULT: 'hsl(60 4.8% 95.9%)',
+                            foreground: 'hsl(24 9.8% 10%)'
+                        },
+                        muted: {
+                            DEFAULT: 'hsl(60 4.8% 95.9%)',
+                            foreground: 'hsl(25 5.3% 44.7%)'
+                        },
+                        accent: {
+                            DEFAULT: 'hsl(142 76% 36%)',
+                            foreground: 'hsl(0 0% 98%)'
+                        },
+                        destructive: {
+                            DEFAULT: 'hsl(0 84.2% 60.2%)',
+                            foreground: 'hsl(0 0% 98%)'
+                        },
+                        border: 'hsl(20 5.9% 90%)',
+                        input: 'hsl(20 5.9% 90%)',
+                        ring: 'hsl(16 100% 55%)',
+                    },
+                    borderRadius: {
+                        lg: '0.75rem',
+                        md: 'calc(0.75rem - 2px)',
+                        sm: 'calc(0.75rem - 4px)'
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .bg-gradient-primary {
+            background-image: linear-gradient(135deg, hsl(16 100% 55%), hsl(0 84% 60%));
+        }
+
+        .bg-gradient-success {
+            background-image: linear-gradient(135deg, hsl(142 76% 36%), hsl(142 71% 45%));
+        }
+
+        .bg-gradient-warm {
+            background-image: linear-gradient(135deg, hsl(45 93% 58%), hsl(16 100% 55%));
+        }
+
+        .shadow-elevated {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / .1), 0 4px 6px -4px rgb(0 0 0 / .1);
+        }
+
+        .shadow-card {
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / .1), 0 2px 4px -2px rgb(0 0 0 / .1);
+        }
+
+        .img-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.5rem;
+            color: white;
+            font-weight: 600;
+        }
+
+        .img-placeholder .emoji {
+            font-size: 3rem;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-foreground">
+    <div id="root">
+        <div class="min-h-screen bg-background">
+            <nav class="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border">
+                <div class="container mx-auto px-4 h-16 flex items-center justify-between"><a class="flex items-center space-x-2" href="/">
+                        <div class="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center"><span class="text-white font-bold text-lg">F</span></div><span class="text-xl font-bold bg-gradient-primary bg-clip-text text-transparent">Foodora</span>
+                    </a><button class="hidden md:flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors px-3 py-1.5 rounded-lg hover:bg-muted/50 max-w-[250px]"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin w-4 h-4 flex-shrink-0 text-primary">
+                            <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path>
+                            <circle cx="12" cy="10" r="3"></circle>
+                        </svg><span class="text-sm truncate">New York, NY</span></button>
+                    <div class="flex items-center space-x-2"><a class="items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 hidden md:flex" href="/auth"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user w-4 h-4 mr-2">
+                                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>Sign In</a><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground hover:bg-primary/90 h-9 rounded-md px-3 bg-gradient-primary hover:opacity-90 border-0 relative"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-bag w-4 h-4 mr-2">
+                                <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
+                                <path d="M3 6h18"></path>
+                                <path d="M16 10a4 4 0 0 1-8 0"></path>
+                            </svg>Cart</button></div>
+                </div>
+            </nav>
+            <div class="min-h-screen bg-background">
+                <section class="relative py-16 md:py-24 overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-primary opacity-5"></div>
+                    <div class="container mx-auto px-4 relative z-10">
+                        <div class="grid md:grid-cols-2 gap-12 items-center">
+                            <div>
+                                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">Delicious food,<span class="bg-gradient-primary bg-clip-text text-transparent block">delivered fast</span></h1>
+                                <p class="text-lg text-muted-foreground mb-8 max-w-md">Order from your favorite restaurants and get fresh, hot meals delivered right to your door.</p>
+                                <div class="relative mb-6"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5">
+                                        <circle cx="11" cy="11" r="8"></circle>
+                                        <path d="m21 21-4.3-4.3"></path>
+                                    </svg><input class="flex w-full rounded-md border-input bg-background px-3 py-2 ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm pl-12 h-14 text-lg border-2 focus:border-primary" placeholder="Search for restaurants or dishes..."><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 text-primary-foreground hover:bg-primary/90 px-4 py-2 absolute right-2 top-2 h-10 bg-gradient-primary hover:opacity-90 border-0">Search</button></div>
+                                <div class="flex flex-wrap gap-2"><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">All</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">Pizza</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">Burgers</button><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3">Sushi</button></div>
+                            </div>
+                            <div class="relative"><div class="rounded-2xl shadow-elevated w-full h-72 bg-gradient-warm img-placeholder"><span class="emoji">🍽️</span><span class="text-lg">Delicious food</span></div>
+                                <div class="absolute -bottom-4 -left-4 bg-background rounded-xl p-4 shadow-elevated border">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-12 h-12 bg-gradient-success rounded-lg flex items-center justify-center"><span class="text-white font-bold">⚡</span></div>
+                                        <div>
+                                            <p class="font-semibold">Fast Delivery</p>
+                                            <p class="text-sm text-muted-foreground">In 30 min</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="py-16">
+                    <div class="container mx-auto px-4">
+                        <div class="flex items-center justify-between mb-8">
+                            <div>
+                                <h2 class="text-3xl font-bold mb-2">Popular Restaurants</h2>
+                                <p class="text-muted-foreground">Order from the best restaurants near you</p>
+                            </div><button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">View All</button>
+                        </div>
+                        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"><a href="/restaurant/1">
+                                <div class="rounded-lg bg-card text-card-foreground shadow-sm group cursor-pointer transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 overflow-hidden border-0 shadow-card">
+                                    <div class="relative overflow-hidden"><div class="w-full h-48 bg-gradient-to-br from-amber-500 to-orange-600 img-placeholder transition-transform duration-300 group-hover:scale-105"><span class="emoji">🍔</span><span class="text-sm">Burger Palace</span></div>
+                                        <div class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 absolute top-3 left-3 bg-gradient-success text-white border-0">20% OFF orders over $25</div>
+                                        <div class="absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3 h-3 text-yellow fill-yellow">
+                                                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
+                                            </svg><span class="text-xs font-medium">4.8</span></div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">Burger Palace</h3>
+                                        <p class="text-muted-foreground text-sm mb-3">American, Burgers</p>
+                                        <div class="flex items-center justify-between text-sm text-muted-foreground">
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                                </svg><span>25-35 min</span></div>
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4">
+                                                    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+                                                    <path d="M15 18H9"></path>
+                                                    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+                                                    <circle cx="17" cy="18" r="2"></circle>
+                                                    <circle cx="7" cy="18" r="2"></circle>
+                                                </svg><span>$2.99</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a><a href="/restaurant/2">
+                                <div class="rounded-lg bg-card text-card-foreground shadow-sm group cursor-pointer transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 overflow-hidden border-0 shadow-card">
+                                    <div class="relative overflow-hidden"><div class="w-full h-48 bg-gradient-to-br from-red-500 to-yellow-500 img-placeholder transition-transform duration-300 group-hover:scale-105"><span class="emoji">🍕</span><span class="text-sm">Pizza Corner</span></div>
+                                        <div class="absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3 h-3 text-yellow fill-yellow">
+                                                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
+                                            </svg><span class="text-xs font-medium">4.6</span></div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">Pizza Corner</h3>
+                                        <p class="text-muted-foreground text-sm mb-3">Italian, Pizza</p>
+                                        <div class="flex items-center justify-between text-sm text-muted-foreground">
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                                </svg><span>30-40 min</span></div>
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4">
+                                                    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+                                                    <path d="M15 18H9"></path>
+                                                    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+                                                    <circle cx="17" cy="18" r="2"></circle>
+                                                    <circle cx="7" cy="18" r="2"></circle>
+                                                </svg><span>Free</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a><a href="/restaurant/3">
+                                <div class="rounded-lg bg-card text-card-foreground shadow-sm group cursor-pointer transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 overflow-hidden border-0 shadow-card">
+                                    <div class="relative overflow-hidden"><div class="w-full h-48 bg-gradient-to-br from-emerald-500 to-teal-600 img-placeholder transition-transform duration-300 group-hover:scale-105"><span class="emoji">🍣</span><span class="text-sm">Sushi Masters</span></div>
+                                        <div class="absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3 h-3 text-yellow fill-yellow">
+                                                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
+                                            </svg><span class="text-xs font-medium">4.9</span></div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">Sushi Masters</h3>
+                                        <p class="text-muted-foreground text-sm mb-3">Japanese, Sushi</p>
+                                        <div class="flex items-center justify-between text-sm text-muted-foreground">
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                                </svg><span>20-30 min</span></div>
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4">
+                                                    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+                                                    <path d="M15 18H9"></path>
+                                                    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+                                                    <circle cx="17" cy="18" r="2"></circle>
+                                                    <circle cx="7" cy="18" r="2"></circle>
+                                                </svg><span>$1.99</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a><a href="/restaurant/4">
+                                <div class="rounded-lg bg-card text-card-foreground shadow-sm group cursor-pointer transition-all duration-300 hover:shadow-elevated hover:-translate-y-1 overflow-hidden border-0 shadow-card">
+                                    <div class="relative overflow-hidden"><div class="w-full h-48 bg-gradient-to-br from-violet-500 to-purple-600 img-placeholder transition-transform duration-300 group-hover:scale-105"><span class="emoji">🥙</span><span class="text-sm">Mediterranean Delight</span></div>
+                                        <div class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent hover:bg-primary/80 absolute top-3 left-3 bg-gradient-success text-white border-0">Free dessert with orders over $30</div>
+                                        <div class="absolute top-3 right-3 bg-background/90 backdrop-blur-sm rounded-full px-2 py-1 flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-star w-3 h-3 text-yellow fill-yellow">
+                                                <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"></path>
+                                            </svg><span class="text-xs font-medium">4.7</span></div>
+                                    </div>
+                                    <div class="p-4">
+                                        <h3 class="font-semibold text-lg mb-1 group-hover:text-primary transition-colors">Mediterranean Delight</h3>
+                                        <p class="text-muted-foreground text-sm mb-3">Mediterranean, Healthy</p>
+                                        <div class="flex items-center justify-between text-sm text-muted-foreground">
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-4 h-4">
+                                                    <circle cx="12" cy="12" r="10"></circle>
+                                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                                </svg><span>35-45 min</span></div>
+                                            <div class="flex items-center space-x-1"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-truck w-4 h-4">
+                                                    <path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path>
+                                                    <path d="M15 18H9"></path>
+                                                    <path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path>
+                                                    <circle cx="17" cy="18" r="2"></circle>
+                                                    <circle cx="7" cy="18" r="2"></circle>
+                                                </svg><span>$3.49</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a></div>
+                    </div>
+                </section>
+                <section class="py-16 bg-muted/30">
+                    <div class="container mx-auto px-4">
+                        <div class="text-center mb-12">
+                            <h2 class="text-3xl font-bold mb-4">Why Choose Foodora?</h2>
+                            <p class="text-muted-foreground max-w-2xl mx-auto">We make food delivery simple, fast, and delicious</p>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-8">
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gradient-primary rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-white text-2xl">🚀</span></div>
+                                <h3 class="text-xl font-semibold mb-2">Fast Delivery</h3>
+                                <p class="text-muted-foreground">Get your food delivered in 30 minutes or less</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gradient-success rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-white text-2xl">⭐</span></div>
+                                <h3 class="text-xl font-semibold mb-2">Top Quality</h3>
+                                <p class="text-muted-foreground">Only the best restaurants and highest quality food</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="w-16 h-16 bg-gradient-warm rounded-2xl flex items-center justify-center mx-auto mb-4"><span class="text-white text-2xl">💝</span></div>
+                                <h3 class="text-xl font-semibold mb-2">Great Value</h3>
+                                <p class="text-muted-foreground">Affordable prices and amazing deals every day</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
