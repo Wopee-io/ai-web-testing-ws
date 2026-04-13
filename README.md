@@ -2,10 +2,6 @@
 
 An intensive one-day workshop exploring practical applications of generative AI in web application testing, focusing on automating test creation and improving QA team efficiency.
 
-- **Duration:** 1 day (9:00 AM – 5:00 PM)
-- **Language:** Czech / English
-- **Level:** Beginner
-- **Format:** On-site / Online
 - **Instructor:** [Marcel Veselka](https://www.linkedin.com/in/marcelveselka/) (Founder of [Wopee.io](https://wopee.io) and [Tesena](https://www.tesena.com))
 - **More info:** [tesena.com/en/gen-ai-pro-web-ui-testing](https://www.tesena.com/en/gen-ai-pro-web-ui-testing/a-927/)
 
