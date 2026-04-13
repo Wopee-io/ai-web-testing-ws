@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wopee.io Skill Evaluation — Methodology &amp; Comparison</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2236;
+    --surface3: #212c42;
+    --border: #2a3454;
+    --text: #e8eaf0;
+    --text-muted: #7c84a0;
+    --purple: #8b5cf6;
+    --purple-light: #a78bfa;
+    --purple-glow: rgba(139,92,246,.2);
+    --teal: #2dd4bf;
+    --teal-glow: rgba(45,212,191,.15);
+    --green: #34d399;
+    --green-glow: rgba(52,211,153,.12);
+    --red: #f87171;
+    --red-glow: rgba(248,113,113,.1);
+    --blue: #60a5fa;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, sans-serif;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    position: relative;
+  }
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(ellipse 700px 400px at 50% 15%, rgba(139,92,246,.07), transparent),
+      radial-gradient(ellipse 500px 300px at 20% 80%, rgba(45,212,191,.05), transparent),
+      radial-gradient(ellipse 500px 300px at 80% 80%, rgba(248,113,113,.04), transparent);
+    pointer-events: none;
+  }
+  .page { padding: 48px 64px; position: relative; z-index: 1; }
+
+  /* Header */
+  .header { text-align: center; margin-bottom: 40px; }
+  .logo-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 14px; }
+  .logo-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 12px var(--teal-glow); }
+  .logo-text { font-size: 13px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--teal); }
+  h1 { font-size: 36px; font-weight: 800; line-height: 1.15; }
+  h1 .highlight { background: linear-gradient(135deg, var(--purple-light), var(--teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .subtitle { color: var(--text-muted); font-size: 15px; margin-top: 8px; }
+
+  /* Pipeline */
+  .pipeline { display: flex; align-items: stretch; gap: 0; margin-bottom: 44px; position: relative; }
+  .pipe-step {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 24px;
+    text-align: center;
+    position: relative;
+  }
+  .pipe-step:first-child { border-radius: 16px 0 0 16px; }
+  .pipe-step:last-child { border-radius: 0 16px 16px 0; }
+  .pipe-step::after {
+    content: '';
+    position: absolute;
+    right: -14px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: none;
+    border-bottom: none;
+    transform: translateY(-50%) rotate(45deg);
+    z-index: 2;
+  }
+  .pipe-step:last-child::after { display: none; }
+  .step-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  .pipe-step:nth-child(1) .step-icon { background: var(--teal-glow); }
+  .pipe-step:nth-child(2) .step-icon { background: var(--purple-glow); }
+  .pipe-step:nth-child(3) .step-icon { background: rgba(96,165,250,.15); }
+  .pipe-step:nth-child(4) .step-icon { background: rgba(251,191,36,.12); }
+  .step-num { font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  .step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .step-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; max-width: 260px; margin: 0 auto; }
+
+  /* Before / After comparison */
+  .comparison { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; align-items: stretch; }
+  .comp-side {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    position: relative;
+  }
+  .comp-side.before { border-color: rgba(248,113,113,.25); }
+  .comp-side.after { border-color: rgba(45,212,191,.25); }
+  .comp-side.before::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--red), rgba(248,113,113,.3));
+    border-radius: 16px 16px 0 0;
+  }
+  .comp-side.after::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, rgba(45,212,191,.3), var(--teal));
+    border-radius: 16px 16px 0 0;
+  }
+  .comp-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .comp-side.before .comp-label { color: var(--red); }
+  .comp-side.after .comp-label { color: var(--teal); }
+
+  .comp-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+  .comp-item:last-child { margin-bottom: 0; }
+  .comp-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .comp-side.before .comp-icon { background: var(--red-glow); }
+  .comp-side.after .comp-icon { background: var(--green-glow); }
+  .comp-item-title { font-size: 14px; font-weight: 600; margin-bottom: 2px; }
+  .comp-item-desc { font-size: 12px; color: var(--text-muted); line-height: 1.45; }
+
+  /* VS divider */
+  .vs-divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .vs-badge {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--surface2);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-muted);
+    z-index: 2;
+  }
+  .vs-line {
+    position: absolute;
+    top: 40px;
+    bottom: 40px;
+    width: 2px;
+    background: var(--border);
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Bottom stats */
+  .bottom-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 32px;
+  }
+  .bstat { text-align: center; }
+  .bstat .bval { font-size: 32px; font-weight: 800; }
+  .bstat .bval.red { color: var(--red); }
+  .bstat .bval.teal { color: var(--teal); }
+  .bstat .blbl { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .bstat-arrow { display: flex; align-items: center; font-size: 28px; color: var(--text-muted); padding-top: 4px; }
+
+  /* Footer */
+  .footer {
+    position: absolute;
+    bottom: 32px;
+    left: 64px;
+    right: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .footer-pills { display: flex; gap: 8px; }
+  .footer-pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 20px; padding: 4px 12px; font-size: 10px; font-weight: 500; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-row">
+      <div class="logo-dot"></div>
+      <div class="logo-text">Wopee.io &times; Claude</div>
+    </div>
+    <h1>Evaluation <span class="highlight">Methodology & Comparison</span></h1>
+    <div class="subtitle">How we measured the impact of a custom AI skill on QA automation workflows</div>
+  </div>
+
+  <!-- Pipeline -->
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="step-icon">&#x1F4CB;</div>
+      <div class="step-num">Step 1</div>
+      <div class="step-title">Define Scenarios</div>
+      <div class="step-desc">6 real-world QA tasks: listing suites, generating coverage, running tests by ID, fetching results, re-running analysis, triaging bugs</div>
+    </div>
+    <div class="pipe-step">
+      <div class="step-icon">&#x1F500;</div>
+      <div class="step-num">Step 2</div>
+      <div class="step-title">Run 12 Agents</div>
+      <div class="step-desc">Each scenario runs twice in parallel: one agent with the skill loaded, one agent without. Same model, same MCP tools, same prompt</div>
+    </div>
+    <div class="pipe-step">
+      <div class="step-icon">&#x2705;</div>
+      <div class="step-num">Step 3</div>
+      <div class="step-title">Grade Assertions</div>
+      <div class="step-desc">27 assertions checked against actual tool call transcripts. Not self-reported output — real tool invocation evidence</div>
+    </div>
+    <div class="pipe-step">
+      <div class="step-icon">&#x1F4CA;</div>
+      <div class="step-num">Step 4</div>
+      <div class="step-title">Aggregate & Compare</div>
+      <div class="step-desc">Pass rates, execution time, and token usage aggregated per scenario. Statistical comparison between configurations</div>
+    </div>
+  </div>
+
+  <!-- Before / After -->
+  <div class="comparison">
+    <!-- Before -->
+    <div class="comp-side before">
+      <div class="comp-label">Without Skill (Baseline)</div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2717;</div>
+        <div>
+          <div class="comp-item-title">Mixed MCP Namespaces</div>
+          <div class="comp-item-desc">Agent alternates between <code style="font-size:11px;background:var(--surface3);padding:1px 4px;border-radius:3px;">mcp__wopee__</code> and <code style="font-size:11px;background:var(--surface3);padding:1px 4px;border-radius:3px;">mcp__Wopee_io_-_FoodDash__</code>, silently querying the wrong project</div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2717;</div>
+        <div>
+          <div class="comp-item-title">Skipped Generation Steps</div>
+          <div class="comp-item-desc">Generates user stories and test cases out of order or simultaneously, producing lower quality artifacts</div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2717;</div>
+        <div>
+          <div class="comp-item-title">Creates New Instead of Re-running</div>
+          <div class="comp-item-desc">When asked to re-run analysis, creates an entirely new suite instead of using the rerun parameter on the existing one</div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2717;</div>
+        <div>
+          <div class="comp-item-title">Slow & Exploratory</div>
+          <div class="comp-item-desc">More trial-and-error, extra tool calls to discover capabilities. Average 109.2 seconds per task</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VS -->
+    <div class="vs-divider">
+      <div class="vs-line"></div>
+      <div class="vs-badge">VS</div>
+    </div>
+
+    <!-- After -->
+    <div class="comp-side after">
+      <div class="comp-label">With Skill</div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2713;</div>
+        <div>
+          <div class="comp-item-title">Correct Namespace Every Time</div>
+          <div class="comp-item-desc">Consistently uses the workspace-specific <code style="font-size:11px;background:var(--surface3);padding:1px 4px;border-radius:3px;">mcp__Wopee_io_-_FoodDash__</code> prefix across all tool calls</div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2713;</div>
+        <div>
+          <div class="comp-item-title">Proper Artifact Ordering</div>
+          <div class="comp-item-desc">Follows APP_CONTEXT &#8594; User Stories &#8594; Test Cases sequence, each layer building on the last for higher quality output</div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2713;</div>
+        <div>
+          <div class="comp-item-title">Re-run Support Built In</div>
+          <div class="comp-item-desc">Uses the rerun parameter to update existing suites after app changes, preserving history and suite continuity</div>
+        </div>
+      </div>
+      <div class="comp-item">
+        <div class="comp-icon">&#x2713;</div>
+        <div>
+          <div class="comp-item-title">Focused & Efficient</div>
+          <div class="comp-item-desc">Direct path to the right tools with correct parameters. Average 52.7 seconds per task — half the baseline time</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Stats -->
+  <div class="bottom-stats">
+    <div class="bstat">
+      <div class="bval red">67%</div>
+      <div class="blbl">Baseline Pass Rate</div>
+    </div>
+    <div class="bstat-arrow">&#x279C;</div>
+    <div class="bstat">
+      <div class="bval teal">93%</div>
+      <div class="blbl">With Skill Pass Rate</div>
+    </div>
+    <div style="width:60px"></div>
+    <div class="bstat">
+      <div class="bval red">109s</div>
+      <div class="blbl">Baseline Avg Time</div>
+    </div>
+    <div class="bstat-arrow">&#x279C;</div>
+    <div class="bstat">
+      <div class="bval teal">53s</div>
+      <div class="blbl">With Skill Avg Time</div>
+    </div>
+    <div style="width:60px"></div>
+    <div class="bstat">
+      <div class="bval red">71k</div>
+      <div class="blbl">Baseline Tokens</div>
+    </div>
+    <div class="bstat-arrow">&#x279C;</div>
+    <div class="bstat">
+      <div class="bval teal">60k</div>
+      <div class="blbl">With Skill Tokens</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>Wopee.io &times; Claude &mdash; FoodDash QA Skill Evaluation &mdash; April 2026</div>
+    <div class="footer-pills">
+      <span class="footer-pill">6 Evaluations</span>
+      <span class="footer-pill">12 Parallel Runs</span>
+      <span class="footer-pill">27 Assertions</span>
+      <span class="footer-pill">Claude Opus 4.6</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

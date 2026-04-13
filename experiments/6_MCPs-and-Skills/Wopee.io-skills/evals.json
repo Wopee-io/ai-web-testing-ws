@@ -1,0 +1,41 @@
+{
+  "skill_name": "wopee-fooddash-testing",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "What test suites exist in the FoodDash project? Show me what's been generated for each one.",
+      "expected_output": "Lists all suites from the Wopee_io_-_FoodDash MCP (not the generic wopee MCP), showing suite names, analysis identifiers (A001, A002, etc.), dates, and artifact generation status for each.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I want to generate full test coverage for the FoodDash app. Start from scratch — analyze the app and build out user stories and test cases.",
+      "expected_output": "Dispatches a new analysis via wopee_dispatch_analysis, then sequentially generates APP_CONTEXT, GENERAL_USER_STORIES, and USER_STORIES_WITH_TEST_CASES artifacts in the correct order. Uses the Wopee_io_-_FoodDash namespace throughout.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Run A001 TC001 and TC002 from US001.",
+      "expected_output": "Resolves A001 to the correct suite UUID from the suites list, dispatches the agent for US001:TC001 and US001:TC002 with the right analysisIdentifier and suiteUuid, then fetches execution results. Uses the Wopee_io_-_FoodDash namespace.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Show me the latest test results for A001. Which tests passed and which failed?",
+      "expected_output": "Resolves A001 to its suite UUID, calls wopee_fetch_executed_test_cases with that UUID and analysisIdentifier A001, then presents results clearly showing pass/fail status, agent reports, and any failure details for each test case.",
+      "files": []
+    },
+    {
+      "id": 5,
+      "prompt": "The app was just updated. Re-run the analysis for A001 to pick up the changes, then regenerate the test cases.",
+      "expected_output": "Uses wopee_dispatch_analysis with the rerun parameter for the A001 suite, waits for it to finish, then regenerates artifacts in the correct order (APP_CONTEXT → GENERAL_USER_STORIES → USER_STORIES_WITH_TEST_CASES). Uses the Wopee_io_-_FoodDash namespace.",
+      "files": []
+    },
+    {
+      "id": 6,
+      "prompt": "We got a bug report that the forgot-password link is broken. Check if we have test coverage for that in A001, and if so, run those specific tests.",
+      "expected_output": "Fetches the USER_STORIES artifact from A001 to search for forgot-password-related test cases (likely US001:TC004), reports whether coverage exists, and if found dispatches the agent for those specific tests. If no coverage exists, suggests creating a new test case for it.",
+      "files": []
+    }
+  ]
+}

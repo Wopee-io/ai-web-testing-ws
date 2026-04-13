@@ -1,0 +1,578 @@
+{
+  "metadata": {
+    "skill_name": "wopee-fooddash-testing",
+    "skill_path": "/sessions/compassionate-eloquent-johnson/wopee-fooddash-testing",
+    "executor_model": "claude-opus-4-6",
+    "analyzer_model": "claude-opus-4-6",
+    "timestamp": "2026-04-13T16:20:00Z",
+    "evals_run": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "List Suites",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 22.5,
+        "tokens": 55454,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites']"
+        },
+        {
+          "text": "Calls wopee_fetch_analysis_suites to list suites",
+          "passed": true,
+          "evidence": "Found wopee_fetch_analysis_suites call"
+        },
+        {
+          "text": "Presents suite names and analysis identifiers (e.g. A001, A002)",
+          "passed": true,
+          "evidence": "Suite names and identifiers presented"
+        },
+        {
+          "text": "Shows artifact generation status for each suite",
+          "passed": true,
+          "evidence": "Artifact status shown"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "List Suites",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 36.8,
+        "tokens": 64184,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact']"
+        },
+        {
+          "text": "Calls wopee_fetch_analysis_suites to list suites",
+          "passed": true,
+          "evidence": "Found wopee_fetch_analysis_suites call"
+        },
+        {
+          "text": "Presents suite names and analysis identifiers (e.g. A001, A002)",
+          "passed": true,
+          "evidence": "Suite names and identifiers presented"
+        },
+        {
+          "text": "Shows artifact generation status for each suite",
+          "passed": true,
+          "evidence": "Artifact status shown"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "Generate Coverage",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 93.0,
+        "tokens": 73526,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact', 'mcp__Wopee_io_-_FoodDash__wopee_dispatch_analysis']"
+        },
+        {
+          "text": "Calls wopee_dispatch_analysis to start a new crawl",
+          "passed": true,
+          "evidence": "Found wopee_dispatch_analysis call"
+        },
+        {
+          "text": "Generates APP_CONTEXT before generating user stories",
+          "passed": false,
+          "evidence": "Order check: APP_CONTEXT(44), GENERAL_USER_STORIES(294), USER_STORIES(91)"
+        },
+        {
+          "text": "Generates GENERAL_USER_STORIES before USER_STORIES_WITH_TEST_CASES",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Follows the correct artifact generation order (APP_CONTEXT -> GENERAL_USER_STORIES -> USER_STORIES_WITH_TEST_CASES)",
+          "passed": false,
+          "evidence": "Order check: APP_CONTEXT(44), GENERAL_USER_STORIES(294), USER_STORIES(91)"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "Generate Coverage",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.2,
+        "passed": 1,
+        "failed": 4,
+        "total": 5,
+        "time_seconds": 269.4,
+        "tokens": 103634,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": false,
+          "evidence": "Tools found: ['mcp__wopee__wopee_create_blank_suite', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__wopee__wopee_fetch_artifact', 'mcp__wopee__wopee_fetch_analysis_suites']"
+        },
+        {
+          "text": "Calls wopee_dispatch_analysis to start a new crawl",
+          "passed": false,
+          "evidence": "Not found in: ['mcp__wopee__wopee_create_blank_suite', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__wopee__wopee_fetch_artifact', 'mcp__wopee__wopee_fetch_analysis_suites']"
+        },
+        {
+          "text": "Generates APP_CONTEXT before generating user stories",
+          "passed": false,
+          "evidence": "Order check: APP_CONTEXT(37), GENERAL_USER_STORIES(37), USER_STORIES(37)"
+        },
+        {
+          "text": "Generates GENERAL_USER_STORIES before USER_STORIES_WITH_TEST_CASES",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Follows the correct artifact generation order (APP_CONTEXT -> GENERAL_USER_STORIES -> USER_STORIES_WITH_TEST_CASES)",
+          "passed": false,
+          "evidence": "Order check: APP_CONTEXT(37), GENERAL_USER_STORIES(37), USER_STORIES(37)"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "Run by ID",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 48.3,
+        "tokens": 56188,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee', 'mcp__Wopee_io_-_FoodDash__wopee_dispatch_agent', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_executed_test_cases']"
+        },
+        {
+          "text": "Resolves A001 to the correct suite UUID by listing suites first",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Calls wopee_dispatch_agent with userStoryId US001 and testCaseIds TC001 and TC002",
+          "passed": true,
+          "evidence": "Found wopee_dispatch_agent call"
+        },
+        {
+          "text": "Uses the correct analysisIdentifier A001 in the dispatch call",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Attempts to fetch execution results after dispatching",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "Run by ID",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 51.5,
+        "tokens": 62324,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": false,
+          "evidence": "Tools found: ['mcp__wopee__wopee_fetch_executed_test_cases(', 'mcp__Wopee_io_-_FoodDash__wopee_dispatch_agent(', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact(', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_executed_test_cases(', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites()']"
+        },
+        {
+          "text": "Resolves A001 to the correct suite UUID by listing suites first",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Calls wopee_dispatch_agent with userStoryId US001 and testCaseIds TC001 and TC002",
+          "passed": true,
+          "evidence": "Found wopee_dispatch_agent call"
+        },
+        {
+          "text": "Uses the correct analysisIdentifier A001 in the dispatch call",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Attempts to fetch execution results after dispatching",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "Get Results",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 25.1,
+        "tokens": 55333,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_executed_test_cases']"
+        },
+        {
+          "text": "Resolves A001 to its suite UUID",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Calls wopee_fetch_executed_test_cases with the suite UUID",
+          "passed": true,
+          "evidence": "Found wopee_fetch_executed_test_cases call"
+        },
+        {
+          "text": "Presents results showing pass/fail status for each test case",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "Get Results",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 43.0,
+        "tokens": 61079,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": false,
+          "evidence": "Tools found: ['mcp__Wopee_io_-_FoodDash', 'mcp__wopee']"
+        },
+        {
+          "text": "Resolves A001 to its suite UUID",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Calls wopee_fetch_executed_test_cases with the suite UUID",
+          "passed": false,
+          "evidence": "Not found in: ['mcp__Wopee_io_-_FoodDash', 'mcp__wopee']"
+        },
+        {
+          "text": "Presents results showing pass/fail status for each test case",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "Rerun Analysis",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 61.3,
+        "tokens": 56239,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_generate_artifact', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact']"
+        },
+        {
+          "text": "Uses wopee_dispatch_analysis with rerun parameter rather than creating a brand new suite",
+          "passed": true,
+          "evidence": "Found wopee_dispatch_analysis call"
+        },
+        {
+          "text": "References A001 suite UUID and analysis identifier in the rerun",
+          "passed": true,
+          "evidence": "Analysis rerun initiated"
+        },
+        {
+          "text": "Regenerates artifacts in the correct order after the re-run",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 5,
+      "eval_name": "Rerun Analysis",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 174.7,
+        "tokens": 71361,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_generate_artifact', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_dispatch_analysis']"
+        },
+        {
+          "text": "Uses wopee_dispatch_analysis with rerun parameter rather than creating a brand new suite",
+          "passed": false,
+          "evidence": "Not found in: ['mcp__Wopee_io_-_FoodDash__wopee_generate_artifact', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact']"
+        },
+        {
+          "text": "References A001 suite UUID and analysis identifier in the rerun",
+          "passed": false,
+          "evidence": "No rerun found"
+        },
+        {
+          "text": "Regenerates artifacts in the correct order after the re-run",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "Coverage vs Bug",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 66.2,
+        "tokens": 65555,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_dispatch_agent', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_executed_test_cases', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact']"
+        },
+        {
+          "text": "Fetches USER_STORIES artifact from A001 to examine test coverage",
+          "passed": true,
+          "evidence": "Coverage information presented"
+        },
+        {
+          "text": "Identifies forgot-password related test case(s) such as US001:TC004",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Dispatches the agent to run the relevant test cases if coverage exists",
+          "passed": true,
+          "evidence": "Coverage information presented"
+        },
+        {
+          "text": "Reports whether existing coverage matches the bug report scenario",
+          "passed": true,
+          "evidence": "Coverage information presented"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 6,
+      "eval_name": "Coverage vs Bug",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 79.8,
+        "tokens": 62118,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "Uses mcp__Wopee_io_-_FoodDash__ namespace tools, NOT mcp__wopee__ namespace",
+          "passed": true,
+          "evidence": "Uses correct namespace: ['mcp__Wopee_io_-_FoodDash__wopee_dispatch_agent', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_analysis_suites', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_executed_test_cases', 'mcp__Wopee_io_-_FoodDash__wopee_fetch_artifact']"
+        },
+        {
+          "text": "Fetches USER_STORIES artifact from A001 to examine test coverage",
+          "passed": true,
+          "evidence": "Coverage information presented"
+        },
+        {
+          "text": "Identifies forgot-password related test case(s) such as US001:TC004",
+          "passed": true,
+          "evidence": "Assertion content found in transcript"
+        },
+        {
+          "text": "Dispatches the agent to run the relevant test cases if coverage exists",
+          "passed": true,
+          "evidence": "Coverage information presented"
+        },
+        {
+          "text": "Reports whether existing coverage matches the bug report scenario",
+          "passed": true,
+          "evidence": "Coverage information presented"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.93,
+        "stddev": 0.15,
+        "min": 0.6,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 52.73,
+        "stddev": 24.4,
+        "min": 22.5,
+        "max": 93.0
+      },
+      "tokens": {
+        "mean": 60382.5,
+        "stddev": 6880.6,
+        "min": 55333,
+        "max": 73526
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.67,
+        "stddev": 0.29,
+        "min": 0.2,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 109.2,
+        "stddev": 85.41,
+        "min": 36.8,
+        "max": 269.4
+      },
+      "tokens": {
+        "mean": 70783.33,
+        "stddev": 15076.88,
+        "min": 61079,
+        "max": 103634
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.26",
+      "time_seconds": "-56.47",
+      "tokens": "-10400.83"
+    }
+  },
+  "notes": [
+    "Skill consistently outperforms baseline across evaluations 2-5, where namespace handling matters most",
+    "eval-1-list-suites: Both configurations achieve 100% pass rate (baseline parity)",
+    "eval-2-generate-coverage: Skill achieves 60% vs baseline 20% (3x improvement)",
+    "eval-3-run-by-id: Skill achieves 100% vs baseline 80% pass rate (+20 percentage points)",
+    "eval-4-get-results: Skill achieves 100% vs baseline 50% pass rate (+50 percentage points)",
+    "eval-5-rerun-analysis: Skill achieves 100% vs baseline 50% pass rate (+50 percentage points)",
+    "eval-6-coverage-vs-bug: Both configurations achieve 100% pass rate (baseline parity)",
+    "Average pass rate improvement across all evals: +26 percentage points",
+    "Average execution time: -56.5 seconds faster with skill (more efficient)",
+    "Average tokens: -10,401 fewer with skill (more efficient token usage)",
+    "Skill demonstrates clear advantage in Wopee.io MCP namespace handling and tool invocation accuracy"
+  ]
+}
