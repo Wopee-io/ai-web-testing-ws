@@ -47,3 +47,4 @@ Experiment 4.2 (Wopee.io) and 4.3 (Copilot SDK) address these limitations with d
 4. Adjust prompt to test with other users (`locked_out_user`, `problem_user`, `performance_glitch_user`). Also try to provide other passwords for users.
 5. Modify the agent to test your vibe-coded app
 6. Prepare 3 relevant tests for your vibe-coded app and execute them with the agent
+7. Use GitHub Copilot and improve the step names tracked into Wopee.io: change `Step no.` into `Step no: question`
