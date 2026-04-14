@@ -2,11 +2,12 @@ import { z } from "zod";
 import { azure } from "@ai-sdk/azure";
 import { Page } from "@playwright/test";
 import { Wopee } from "@wopee-io/wopee.pw";
-import { getPage } from "../utils/playwright.js";
+import { getPage, getWopee } from "../utils/playwright.js";
 import { generateText, tool, UserModelMessage } from "ai";
 import { baseUrl, systemPrompt, userPrompt } from "../config.js";
 import { splitHtmlIntoChunks } from "../utils/splitHtmlIntoChunks.js";
 import { assertPage, handleError, waitForLoader } from "../utils/utils.js";
+import { getStepNumber } from "../utils/stepper.js";
 
 let page: Page | undefined = undefined;
 
@@ -78,7 +79,8 @@ export const screenshotAndAnalyze = tool({
       await waitForLoader(page);
       assertPage(page);
 
-      const wopee = new Wopee();
+      const wopee = getWopee() || new Wopee();
+      await wopee.trackViewport({ stepName: `Step ${getStepNumber()}`, page });
       const { status, confidence, message } = await wopee.visualAssert({
         page,
         prompt: `You are analyzing a webpage screenshot to make sure that previous step conducted correctly

@@ -11,13 +11,19 @@ import {
 } from "./utils/tools.js";
 import { systemPrompt as system, userPrompt as prompt } from "./config";
 import { getStepNumber, incrementStepNumber } from "./utils/stepper.js";
-import { TestInfo, Page } from "@playwright/test";
-import { setPage, setTestInfo } from "./utils/playwright.js";
+import { test, TestInfo, Page } from "@playwright/test";
+import { setPage, setTestInfo, setWopee } from "./utils/playwright.js";
+import { Wopee } from "@wopee-io/wopee.pw";
 
 export async function agent(
   page: Page | undefined = undefined,
   testInfo: TestInfo | undefined = undefined
 ) {
+  const wopee = new Wopee();
+  setWopee(wopee);
+  await wopee.startSuite(`Agent Test ${new Date().toISOString().substring(0, 16)}`);
+  if (testInfo) await wopee.startScenario(test.info().title, testInfo);
+
   try {
     if (page) setPage(page);
     if (testInfo) setTestInfo(testInfo);
@@ -55,5 +61,7 @@ export async function agent(
       "Error in agent:",
       error instanceof Error ? error.message : String(error)
     );
+  } finally {
+    await wopee.stopScenario();
   }
 }
