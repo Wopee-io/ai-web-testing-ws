@@ -20,6 +20,7 @@ A checklist-style reference for testers & test automation engineers. Ordered by 
 
 - [ ] Config file: `.vscode/mcp.json` (workspace) or user settings.
 - [ ] Format:
+
   ```json
   {
     "servers": {
@@ -27,6 +28,7 @@ A checklist-style reference for testers & test automation engineers. Ordered by 
     }
   }
   ```
+
 - [ ] Useful MCP servers for testers: **Playwright**, **Wopee.io**, **GitHub**, **Filesystem**, **Fetch**.
 - [ ] Start/stop/inspect from the Chat view → **MCP Servers** panel.
 - [ ] Secrets → use VS Code input variables (`${input:...}`), never hardcode.
@@ -79,3 +81,24 @@ Commit these per repo so the whole team gets the same experience:
 3. Swap models: base → Sonnet → Opus; point out premium counter.
 4. Run a `.prompt.md` to scaffold a Playwright test.
 5. Invoke Playwright MCP from Agent mode → show browser automation live.
+
+## Try It Yourself
+
+Clone your Lovable repo and continue working there — add Copilot setup step by step:
+
+1. **Clone your Lovable repo** locally and open it in VS Code.
+2. **Install required extensions** (see §5): GitHub Copilot, Copilot Chat, Playwright Test.
+3. **Create `.vscode/mcp.json`** with Playwright MCP (see §3 snippet). Start the server from the MCP panel.
+4. **Add `.github/copilot-instructions.md`** — project conventions (stack, locator strategy, test naming).
+5. **Add `AGENTS.md`** at repo root with the same core rules so other AI tools stay aligned.
+6. **Create a `.github/prompts/generate-e2e-test.prompt.md`** that takes a user flow and produces a Playwright spec.
+7. **Try each chat mode** on the repo:
+   - **Ask** — "Explain how routing works here."
+   - **Plan** — "Plan adding Playwright E2E tests for checkout."
+   - **Agent** — execute the plan; let it create files and run tests.
+8. **Switch models** mid-task (base → Sonnet → Opus) and compare quality vs. premium cost.
+9. **Generate 3 E2E tests** for your app using the prompt file + Playwright MCP.
+10. **Commit `.vscode/`, `.github/`, `AGENTS.md`** so the setup travels with the repo.
+11. **Vyzkoušejte češtinu 🇨🇿** — otevřete **nový chat** (Ask mode) a zadejte tento prompt, ať celá session běží v češtině:
+
+    > Ahoj Copilote! Projdi prosím celý tento repozitář a srozumitelně mi vysvětli, o co se jedná: jaký je účel projektu, jaké technologie používá, jaká je struktura složek a jak spolu jednotlivé části souvisí. Odpovídej **česky** a pokračuj v češtině i ve všech dalších odpovědích v této konverzaci. Buď **vtipný a hravý** (klidně s vhodným vtípkem nebo emoji) a zároveň **proaktivní** — nečekej, až si o něco řeknu. Na konci **každé** své odpovědi mi navrhni **3 konkrétní další kroky**, které bychom mohli udělat, očísluj je **1, 2, 3**, a já odpovím jen číslem, podle toho, co chci spustit. Pojďme na to! 🚀
