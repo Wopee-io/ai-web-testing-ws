@@ -1,16 +1,22 @@
 # LLM Workflows
 
-> This section is covered in slides only — no hands-on experiments.
+> This section is covered in slides — no hands-on experiments.
 
 ## Topics Covered
 
-- **Composer patterns** — chaining multiple LLM calls into structured workflows
-- **Test generation from scenarios** — turning user stories and acceptance criteria into test cases
+- **LLM application architectures** — augmented LLM, prompt chaining, routing, parallelization, evaluator-optimizer, autonomous agents (source: [Anthropic — Building Effective Agents](https://www.anthropic.com/research/building-effective-agents))
+- **Test script creation process** — URLs/HTML/screenshots → user stories → test cases → executable code, with LLM workflows and human review at each step
+- **Test generation from scenarios** — turning user stories and acceptance criteria into test cases with an LLM
 - **Test generation from screenshots** — using vision models to derive tests from UI screenshots
-- **playwright-ai-bot** — automated test generation using LLM-powered browser interaction
-- **Prompt engineering for testing** — crafting effective prompts for test case generation, assertion writing, and bug reproduction
+- **Playwright AI Bot** — automated test generation using LLM-powered browser interaction
 
-Some more details on playwright-ai-bot here:
+Resources:
 
 - https://wopee.io/blog/playwright-bot-ai-powered-test-automation/
 - https://github.com/Wopee-io/playwright-ai-bot-demo
+
+## Try It Yourself
+
+1. Open Claude or ChatGPT and paste the spec from `experiments/2_Vibe-Coding/spec-sample.md` — ask it to generate Playwright test cases
+2. Take a screenshot of https://foodora.lovable.app and upload it to a vision model — ask it to identify testable interactions and generate test scenarios
+3. Clone the [playwright-ai-bot demo](https://github.com/Wopee-io/playwright-ai-bot-demo) and try generating tests for your vibe-coded app

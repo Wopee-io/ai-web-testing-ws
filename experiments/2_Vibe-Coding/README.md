@@ -1,52 +1,50 @@
-# Vibe coding: Building a Foodora clone
+# Vibe Coding: Building a Foodora Clone
 
-We will build a simple web app where users can sign in, browse food options, and place orders. This will be later used for testing.
+Build a simple food delivery web app using AI — from prompt to published URL.
 
-## 1. Prompting specification
+## 1. Write your specification
 
-> Generate a detailed spec for a simple web app where users can sign in, browse food options, and place orders. The app should have user roles (customer, admin), authentication, order management, and payment features. The spec should include functional and non-functional requirements, UI/UX considerations, and data storage details.
+Use any LLM (Claude, ChatGPT, etc.) to generate a detailed spec. Example prompt:
 
-My prompt was even messier. Here are the two prompts I used:
+> Generate a detailed spec for a simple web app where users can sign in, browse food options, and place orders. The app should have user roles (customer, admin), authentication, order management, and payment features.
 
-**Prompt 1**
-
-> How to prepare specification for vibe coding tools like Lovable.dev or similar?
-
-**Prompt 2**
-
-> Prepare template for me I will finalize in MD.
-
-> I want to build an app for users to sign in, browse food options, and place orders. Users should be able to register, login, and manage their orders. Admins should be able to manage food options and view all orders. The app will work locally in the browser for the initial prototype, and all data will be stored in browser storage.
+See `spec-sample.md` for a reference and `spec-guidelines.md` for tips on writing good specs.
 
 ## 2. Save your spec
 
-Save your spec in `experiments/1_Vibe-coding/spec.md`. We will use it in the next experiments.
+Save it as `spec.md` in this folder. The more detailed and clear your spec is, the better results you'll get.
 
-Note: See my spec in `spec-sample.md` for reference. There is also guideline how to write good spec in `spec-guidelines.md`. You can use them as inspiration, but try to write your own spec based on your vision of the app. The more detailed and clear your spec is, the better results you will get in the next steps.
+## 3. Build with Lovable
 
-## 3. Choose your favorite vibe coding tool.
+Open [lovable.dev](https://lovable.dev) and paste your spec into the prompt. Lovable will generate a full-stack app you can preview and iterate on.
 
-> [!IMPORTANT]
->
-> The tool must support web apps deployment so app can be accessed from internet.
+Other tools for inspiration: [Bolt.new](https://bolt.new), [Replit](https://replit.com), [v0.dev](https://v0.dev)
 
-Recommended tools:
+## 4. Test manually
 
-- Lovable (https://lovable.ai)
-- Bolt.new (https://bolt.new)
-- Replit (https://replit.com)
-- v0.dev (https://v0.dev)
+Before sharing, test your app in the Lovable preview:
 
-## 4. Vibe code & test manually.
+- Does sign-in / registration work?
+- Can you browse food items and add to cart?
+- Does the checkout flow complete?
+- Check mobile view — toggle between web and mobile preview
+- Look for broken links, missing images, or layout issues
 
-## 5. Deploy or find the public URL of your app.
+## 5. Publish your app
 
-## 6. Example I built
+Click **Publish** in the top-right corner of your Lovable project. This generates a public `.lovable.app` URL (e.g., `yourapp.lovable.app`). No deployment or hosting setup needed — Lovable handles it.
 
-This is a example I built (NOT tested and pretty buggy). You can use it as inspiration or try to fork and modify it (aka remix in Lovable). Use it if you get stuck.
+> Changes after publishing don't go live automatically — click **Publish > Update** to push updates.
+
+## 6. Example app
+
+This is an example (NOT fully tested, pretty buggy). Use it as inspiration or remix it in Lovable:
 
 - https://foodora.lovable.app
 
-## 7. Learning from others
+## Try It Yourself
 
-Present your app and share what you've learned. What worked well? What didn't? What would you do differently next time?
+1. Write a spec and build your app in Lovable
+2. Test it manually — find at least 3 bugs
+3. Publish and share the URL with the group
+4. Present your app: what worked, what didn't, what would you change?
