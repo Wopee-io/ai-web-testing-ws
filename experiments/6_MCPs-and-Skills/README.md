@@ -33,7 +33,11 @@ We tested a custom Wopee.io skill vs unguided baseline (both using Claude Opus 4
 - **2x faster** — 52.7s avg vs 109.2s baseline (fewer exploratory tool calls)
 - **-15% tokens** — less trial and error = lower cost per task
 
-More about skills: [agentskills.io](https://agentskills.io)
+Learn more:
+
+- [agentskills.io](https://agentskills.io) — open skill format and registry
+- [The Complete Guide to Building Skills for Claude](https://resources.anthropic.com/hubfs/The-Complete-Guide-to-Building-Skill-for-Claude.pdf) (PDF)
+- [Building Skills for Claude — video walkthrough](https://www.youtube.com/watch?v=6-D3fg3JUL4&t=83s) (YouTube)
 
 ## Future: AI Testing Teams with MCPs
 
