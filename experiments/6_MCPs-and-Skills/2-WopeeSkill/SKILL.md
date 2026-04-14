@@ -156,3 +156,14 @@ Present results to the user in a clear format, highlighting any failures and the
 - When presenting test cases to the user, include the user story ID and test case ID (e.g., US001:TC001) so they can easily reference specific tests.
 - The `analysisIdentifier` (e.g., A001) is different from the suite UUID. You need both for dispatching agents — the UUID to identify the suite and the identifier for the specific analysis run.
 - Reusable test cases (R001:RTC001 etc.) can be referenced across multiple user stories — they're useful for common flows like login.
+
+## Troubleshooting
+
+| Symptom | Cause | Fix |
+|---------|-------|-----|
+| `wopee_dispatch_analysis` returns but no artifacts appear | Crawl is still running | Wait 1-2 minutes, then call `wopee_fetch_artifact` to check |
+| `wopee_dispatch_agent` fails with 429 | Rate limit hit | Wait 2 minutes between dispatch calls, apply exponential backoff if needed |
+| Artifact content is empty or incomplete | Generated too early — previous artifact not ready | Ensure generation order: APP_CONTEXT → USER_STORIES → TEST_CASES |
+| Wrong test suite data returned | Using wrong MCP namespace | Verify prefix is `mcp__Wopee_io_-_FoodDash__wopee_*` |
+| Suite UUID not found | Using analysis identifier instead of UUID | Call `wopee_fetch_analysis_suites` to resolve A001 → UUID |
+| Agent dispatched but status stays `IN_PROGRESS` | Test execution takes time | Wait 30-60 seconds, then call `wopee_fetch_executed_test_cases` again |

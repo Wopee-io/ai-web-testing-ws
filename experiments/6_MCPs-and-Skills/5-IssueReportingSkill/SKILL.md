@@ -49,7 +49,7 @@ Guidelines for AI agents and humans to create consistent, well-structured GitHub
 
 ### Cross-component Issues
 
-Use **slash** (`/`) as separator, primary component first:
+Use **slash** (`/`) as separator, primary component first (CI/CD filters typically match on the left-most prefix):
 
 - `[frontend/api]` — UI issue that requires API changes
 - `[api/agent]` — Backend change affecting the agent
@@ -194,7 +194,7 @@ When an AI agent creates issues on behalf of a user:
 5. **Set type** (Bug / Feature / Task)
 6. **Set priority label** if it's a bug
 7. **Search for duplicates** before creating
-8. **Present draft** to the user for review before creating
+8. **Present draft** to the user for review — if user requests changes, revise and present again. Do not create until user explicitly approves.
 
 ### Mapping User Feedback to Components
 
@@ -211,7 +211,7 @@ When an AI agent creates issues on behalf of a user:
 
 ## Why This Matters
 
-Analysis of ~500 issues in a real product backlog found:
+Analysis of ~500 issues in a real product backlog (2024-2025) found:
 
 | Finding                    | Impact                           | Recommendation               |
 | -------------------------- | -------------------------------- | ---------------------------- |
