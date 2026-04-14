@@ -60,6 +60,8 @@ This works today — see the [Copilot + MCP agent](../4_AI-Agents/3-GitHubCopilo
 
 ## Try It Yourself
 
-1. Follow the [Playwright MCP experiment](./1-PlaywrightMCP/) to set up and run MCP-powered tests in VS Code
-2. Review the [Wopee.io SKILL.md](./2-WopeeSkill/SKILL.md) — understand how skills structure agent knowledge
-3. Check the [evaluation report](./2-WopeeSkill/EVAL_REPORT.md) — see how skills improve agent performance
+1. **Playwright MCP** — follow [6.1](./1-PlaywrightMCP/) to set up Playwright MCP in VS Code and run test prompts
+2. **Skills** — review the [Wopee.io SKILL.md](./2-WopeeSkill/SKILL.md) and [evaluation report](./2-WopeeSkill/EVAL_REPORT.md) — understand how skills improve agent performance (+26% pass rate, 2x faster)
+3. **MCP Testing Team** — follow [6.3](./3-MCPTestingTeam/) to run the test-analyst and testing-team prompts combining Jira + Wopee.io + Playwright
+4. **Explore skill examples** — compare the [AIO Tests](./4-AIOTestsSkill/SKILL.md) and [Issue Reporting](./5-IssueReportingSkill/SKILL.md) skills — notice how each skill structures domain knowledge differently (API reference vs conventions & templates)
+5. **Write your own skill** — pick a workflow your team does repeatedly and draft a SKILL.md for it
