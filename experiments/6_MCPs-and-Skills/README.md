@@ -48,15 +48,18 @@ Jira (Atlassian MCP)  →  Wopee.io (Wopee MCP)  →  Browser (Playwright MCP)
                         (comment back to Jira)
 ```
 
-This works today — see the [Copilot + MCP agent](../4_AI-Agents/3-GitHubCopilotAgent/) and the [skill evaluation report](./Wopee.io-skills/EVAL_REPORT.md).
+This works today — see the [Copilot + MCP agent](../4_AI-Agents/3-GitHubCopilotAgent/) and the [skill evaluation report](./2-WopeeSkill/EVAL_REPORT.md).
 
 ## Experiments
 
-- [Playwright MCP](./Playwright-MCP/) — Use Playwright MCP server in VS Code to test web apps
-- [Wopee.io Skills](./Wopee.io-skills/) — SKILL.md for Wopee.io FoodDash testing automation
+- [6.1 Playwright MCP](./1-PlaywrightMCP/) — Use Playwright MCP server in VS Code to test web apps
+- [6.2 Wopee.io Skill](./2-WopeeSkill/) — SKILL.md for Wopee.io FoodDash testing automation
+- [6.3 MCP Testing Team](./3-MCPTestingTeam/) — Combine Jira + Wopee.io + Playwright MCPs into a full testing workflow
+- [6.4 AIO Tests Skill](./4-AIOTestsSkill/) — SKILL.md for AIO Tests (Jira plugin) — fetch, create, update test cases via REST API
+- [6.5 Issue Reporting Skill](./5-IssueReportingSkill/) — SKILL.md for structured GitHub issue creation — title conventions, body templates, labels, agent workflow
 
 ## Try It Yourself
 
-1. Follow the [Playwright MCP experiment](./Playwright-MCP/) to set up and run MCP-powered tests in VS Code
-2. Review the [Wopee.io SKILL.md](./Wopee.io-skills/SKILL.md) — understand how skills structure agent knowledge
-3. Check the [evaluation report](./Wopee.io-skills/EVAL_REPORT.md) — see how skills improve agent performance
+1. Follow the [Playwright MCP experiment](./1-PlaywrightMCP/) to set up and run MCP-powered tests in VS Code
+2. Review the [Wopee.io SKILL.md](./2-WopeeSkill/SKILL.md) — understand how skills structure agent knowledge
+3. Check the [evaluation report](./2-WopeeSkill/EVAL_REPORT.md) — see how skills improve agent performance
