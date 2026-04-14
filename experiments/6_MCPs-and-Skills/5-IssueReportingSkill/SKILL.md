@@ -12,6 +12,41 @@ Guidelines for AI agents and humans to create consistent, well-structured GitHub
 
 ---
 
+## Setup
+
+This skill requires [GitHub CLI (`gh`)](https://cli.github.com/) to be installed and authenticated.
+
+### 1. Install GitHub CLI
+
+```bash
+# macOS
+brew install gh
+
+# Windows
+winget install --id GitHub.cli
+
+# Linux (Debian/Ubuntu)
+sudo apt install gh
+```
+
+### 2. Authenticate
+
+```bash
+gh auth login
+```
+
+Follow the prompts — select **GitHub.com**, **HTTPS**, and authenticate via browser. This stores a token that `gh` commands (and AI agents) use automatically.
+
+### 3. Verify
+
+```bash
+gh auth status
+```
+
+You should see your GitHub username and the scopes granted. If you need to create issues in private repos, ensure the token has the `repo` scope.
+
+---
+
 ## Tools
 
 - `gh issue create` — Create issues with title, body, labels, and type
