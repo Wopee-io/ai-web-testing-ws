@@ -32,14 +32,14 @@
 
    _Project > Analysis > 4. Test Cases > + Add user story_
 
-## Your turn - experiments
+## Try It Yourself
 
-1. Explore the platform and its features.
-2. Create a new project for your testing experiments (use your vibe coded app).
-3. Run analysis / crawling to generate tests.
-4. Create new analysis with spec used in previous experiment (vibe coded app).
-5. Run AI Agent Test.
-6. Analyze the reports and Playwright code generated.
-7. Create your own test manually.
-8. Add a user story and generate tests from it (w/ and wo/ prompt).
-9. Save your generated Playwright test files into GitHub repo.
+1. Explore the platform and its features
+2. Create a new project for your testing experiments (use your vibe-coded app)
+3. Run analysis / crawling to generate tests
+4. Create new analysis with spec used in previous experiment (vibe-coded app)
+5. Run AI Agent Test
+6. Analyze the reports and Playwright code generated
+7. Create your own test manually
+8. Add a user story and generate tests from it (w/ and wo/ prompt)
+9. Save your generated Playwright test files into GitHub repo

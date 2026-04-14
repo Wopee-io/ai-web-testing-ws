@@ -35,6 +35,21 @@ We tested a custom Wopee.io skill vs unguided baseline (both using Claude Opus 4
 
 More about skills: [agentskills.io](https://agentskills.io)
 
+## Future: AI Testing Teams with MCPs
+
+With multiple MCPs connected, a single agent can orchestrate a full testing workflow:
+
+```text
+Jira (Atlassian MCP)  →  Wopee.io (Wopee MCP)  →  Browser (Playwright MCP)
+     │                         │                          │
+  Fetch bug              Find/create tests          Execute tests
+     │                         │                          │
+     └─── Prepare test plan ───┴──── Report results ──────┘
+                        (comment back to Jira)
+```
+
+This works today — see the [Copilot + MCP agent](../4_AI-Agents/3-GitHubCopilotAgent/) and the [skill evaluation report](./Wopee.io-skills/EVAL_REPORT.md).
+
 ## Experiments
 
 - [Playwright MCP](./Playwright-MCP/) — Use Playwright MCP server in VS Code to test web apps
@@ -44,3 +59,4 @@ More about skills: [agentskills.io](https://agentskills.io)
 
 1. Follow the [Playwright MCP experiment](./Playwright-MCP/) to set up and run MCP-powered tests in VS Code
 2. Review the [Wopee.io SKILL.md](./Wopee.io-skills/SKILL.md) — understand how skills structure agent knowledge
+3. Check the [evaluation report](./Wopee.io-skills/EVAL_REPORT.md) — see how skills improve agent performance

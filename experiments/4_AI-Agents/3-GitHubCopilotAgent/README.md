@@ -1,4 +1,4 @@
-# Experiment # 4.3: GitHub Copilot Testing Agent
+# Experiment 4.3: GitHub Copilot Testing Agent
 
 ## Introduction
 
@@ -8,23 +8,35 @@ The agent reads test instructions from a config file and executes them autonomou
 
 ## Architecture
 
-```
+```text
 config.ts  →  test instructions (what to test)
 agent.ts   →  Copilot SDK session + system prompt (~40 lines)
 run.ts     →  entry point
 ```
 
 **How it works:**
+
 1. Agent receives your test instructions
 2. LLM decides which `playwright-cli` commands to run
 3. Built-in `bash` tool executes the commands
 4. LLM reads the output, decides next step
 5. Repeat until test is complete
 
-## Prerequisites
+## Playwright CLI vs MCP
 
-- Node.js 18+
-- GitHub Copilot subscription (Individual, Business, or Enterprise)
+Same Playwright engine, same team — different interface for the LLM:
+
+|                     | **CLI** (`@playwright/cli`)            | **MCP** (`@playwright/mcp`)                 |
+| ------------------- | -------------------------------------- | ------------------------------------------- |
+| **Transport**       | Daemon + shell commands                | JSON-RPC server                             |
+| **Context cost**    | ~27K tokens/session                    | ~114K tokens/session                        |
+| **Interactions**    | 50+ stable interactions                | ~15 before degradation                      |
+| **Cost**            | 4x cheaper                             | Richer reasoning                            |
+| **Context loading** | SKILLS system (progressive)            | Full accessibility tree                     |
+| **Observability**   | Live dashboard (`playwright-cli show`) | Client-dependent                            |
+| **Best for**        | Agents with shell access               | Sandboxed environments, exploratory testing |
+
+> Use both: CLI as primary (agents with shell), MCP as fallback (sandboxed UIs).
 
 ## Authentication
 
@@ -63,10 +75,10 @@ npm install @github/copilot-sdk @playwright/cli tsx
 ## Run
 
 ```bash
-npx tsx experiments/4_AI-Agents/run.ts
+npx tsx experiments/4_AI-Agents/3-GitHubCopilotAgent/run.ts
 ```
 
-## Exercises
+## Try It Yourself
 
 1. **Login test** (default): Run as-is — agent tests login on saucedemo.com
 2. **Purchase flow**: Uncomment the purchase test in `config.ts` and run

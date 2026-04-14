@@ -12,6 +12,33 @@ We will be coding together in this section. All work happens in `experiments/4_A
 
 For more info about agents see: [Vercel AI SDK - Agents](https://sdk.vercel.ai/docs/foundations/agents)
 
+## Key Concepts
+
+The agent defines 6 custom tools that wrap the Playwright Page API:
+
+| Tool                    | What it does                                     |
+| ----------------------- | ------------------------------------------------ |
+| `startTesting`          | Opens the browser and navigates to the target URL |
+| `screenshotAndAnalyze`  | Takes a screenshot and uses vision LLM to verify  |
+| `getActionInstructions` | Reads page HTML and returns locators for actions   |
+| `click`                 | Clicks an element by locator                      |
+| `fill`                  | Fills an input field with a value                  |
+| `stopTesting`           | Signals the agent to stop                         |
+
+The LLM decides **which tool to call and with what arguments** at each step. This is the core of an AI agent — planning + tool use in a loop.
+
+## Why the Simple Approach Falls Short
+
+This approach works for demos but has real-world limitations:
+
+1. **High maintenance** — every tool requires manual updates and maintenance
+2. **No repeatability** — no test history, impossible to track regressions
+3. **No traceability** — debugging and issue tracking become difficult
+4. **Code-heavy** — requires developers to write and maintain extensive tool code
+5. **Scalability issues** — hard to scale across multiple platforms and environments
+
+Experiment 4.2 (Wopee.io) and 4.3 (Copilot SDK) address these limitations with different approaches.
+
 ## Try It Yourself
 
 1. Run simple `login test`: config.ts → `userPrompt` → check if it is correct → run test → check results
