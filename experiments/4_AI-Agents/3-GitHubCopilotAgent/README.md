@@ -75,7 +75,7 @@ npm install @github/copilot-sdk @playwright/cli tsx
 ## Run
 
 ```bash
-npx tsx experiments/4_AI-Agents/3-GitHubCopilotAgent/run.ts
+npm run e4.3
 ```
 
 ## Try It Yourself

@@ -8,7 +8,7 @@ We will be coding together in this section. All work happens in `experiments/4_A
 2. Set your `.env` file with your Azure OpenAI credentials (see `.env.example`)
 3. Explore `run-agent.spec.ts` and `agent.ts`
 4. Review config file: `config.ts`
-5. Run tests: `npm run e4`
+5. Run tests: `npm run e4.1`
 
 For more info about agents see: [Vercel AI SDK - Agents](https://sdk.vercel.ai/docs/foundations/agents)
 

@@ -22,10 +22,9 @@
   },
   "scripts": {
     "test": "npm run pw",
-    "agent": "playwright test ./agents/run-agent.spec.ts --config playwright.config.ts",
-    "e4": "npx tsx experiments/4_AI-Agents/2-GitHubCopilotAgent/run.ts",
-    "e6": "npx tsx experiments/6_Intro-to-MCP/2-GitHubCopilotAgent/run.ts",
-    "pw": "playwright test ./tests/ --config playwright.config.ts"
+    "pw": "playwright test ./tests/ --config playwright.config.ts",
+    "e4.1": "playwright test ./experiments/4_AI-Agents/1-SimpleTestingAgent/run-agent.spec.ts --config playwright.config.ts",
+    "e4.3": "npx tsx experiments/4_AI-Agents/3-GitHubCopilotAgent/run.ts"
   },
   "prettier": {
     "trailingComma": "all"
