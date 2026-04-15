@@ -54,10 +54,18 @@ The SDK will automatically pick up your GitHub CLI credentials.
 
 ### Option B: Environment variable
 
-Set a GitHub token with Copilot access:
+This experiment loads the repository root `.env` file automatically.
+
+Create a `.env` file with a GitHub token that has Copilot access:
 
 ```bash
-export GITHUB_TOKEN=ghp_your_token_here
+COPILOT_GITHUB_TOKEN=ghp_your_token_here
+```
+
+You can also set it directly in your shell:
+
+```bash
+export COPILOT_GITHUB_TOKEN=ghp_your_token_here
 ```
 
 The SDK checks for tokens in this order: `COPILOT_GITHUB_TOKEN` → `GH_TOKEN` → `GITHUB_TOKEN` → GitHub CLI credentials.
