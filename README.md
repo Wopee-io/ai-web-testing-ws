@@ -64,7 +64,7 @@ In-house training (minimum 8 participants) can be tailored to specific team envi
 Please follow these steps before the workshop:
 
 1. **Connect with me via LinkedIn:** [linkedin.com/in/marcel-veselka](https://www.linkedin.com/in/marcel-veselka) — share your expectations and questions, and I will adjust the workshop based on that.
-2. **Submit this form:** [Google Form](https://forms.gle/A9romEyVQVXpJLFS7) — we'll make sure we are ready for you.
+2. **Submit this form:** [Google Form](https://forms.gle/8C4o9JTEmqUgSqoE6) — we'll make sure we are ready for you.
 3. **Install Node.js:** [nodejs.org/en/download](https://nodejs.org/en/download/)
 4. **Install GitHub CLI:** [cli.github.com](https://cli.github.com/)
 5. **Set up VS Code and Playwright:** [playwright.dev/docs/getting-started-vscode](https://playwright.dev/docs/getting-started-vscode)
