@@ -67,6 +67,11 @@ Please follow these steps before the workshop:
 2. **Submit this form:** [Google Form](https://forms.gle/8C4o9JTEmqUgSqoE6) — we'll make sure we are ready for you.
 3. **Install Node.js:** [nodejs.org/en/download](https://nodejs.org/en/download/)
 4. **Install GitHub CLI:** [cli.github.com](https://cli.github.com/)
+   - Windows: `winget install --id GitHub.cli`
+   - Mac: `brew install gh`
+   - Linux and other options: [installation guide](https://github.com/cli/cli#installation)
+   - Sign in: `gh auth login` → GitHub.com → HTTPS → authenticate in browser
+   - Verify: `gh auth status` should show you as logged in
 5. **Set up VS Code and Playwright:** [playwright.dev/docs/getting-started-vscode](https://playwright.dev/docs/getting-started-vscode)
 6. **Clone this repo (in VS Code):**
    - Windows: `Ctrl+Shift+P` → Git: Clone → paste this repository URL
