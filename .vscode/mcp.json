@@ -14,6 +14,17 @@
       "command": "npx",
       "args": ["wopee-mcp@latest"],
       "envFile": "${workspaceFolder}/.env"
+    },
+
+    "youtrack": {
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://YOUR-INSTANCE.youtrack.cloud/mcp",
+        "--header",
+        "Authorization:${YOUTRACK_AUTH_HEADER}"
+      ],
+      "envFile": "${workspaceFolder}/.env"
     }
   }
 }

@@ -61,6 +61,7 @@ This works today — see the [Copilot + MCP agent](../4_AI-Agents/3-GitHubCopilo
 - [6.3 MCP Testing Team](./3-MCPTestingTeam/) — Combine Jira + Wopee.io + Playwright MCPs into a full testing workflow
 - [6.4 AIO Tests Skill](./4-AIOTestsSkill/) — SKILL.md for AIO Tests (Jira plugin) — fetch, create, update test cases via REST API
 - [6.5 Issue Reporting Skill](./5-IssueReportingSkill/) — SKILL.md for structured GitHub issue creation — title conventions, body templates, labels, agent workflow
+- [6.6 YouTrack MCP](./6-YouTrackMCP/) — Connect the YouTrack MCP server (remote, token auth) and let the agent triage and file issues
 
 ## Try It Yourself
 
@@ -68,4 +69,5 @@ This works today — see the [Copilot + MCP agent](../4_AI-Agents/3-GitHubCopilo
 2. **Skills** — review the [Wopee.io SKILL.md](./2-WopeeSkill/SKILL.md) and [evaluation report](./2-WopeeSkill/EVAL_REPORT.md) — understand how skills improve agent performance (+26% pass rate, 2x faster)
 3. **MCP Testing Team** — follow [6.3](./3-MCPTestingTeam/) to run the test-analyst and testing-team prompts combining Jira + Wopee.io + Playwright
 4. **Explore skill examples** — compare the [AIO Tests](./4-AIOTestsSkill/SKILL.md) and [Issue Reporting](./5-IssueReportingSkill/SKILL.md) skills — notice how each skill structures domain knowledge differently (API reference vs conventions & templates)
-5. **Write your own skill** — pick a workflow your team does repeatedly and draft a SKILL.md for it
+5. **YouTrack MCP** — follow [6.6](./6-YouTrackMCP/) to connect your own YouTrack instance and have the agent triage the backlog and file a bug it found itself
+6. **Write your own skill** — pick a workflow your team does repeatedly and draft a SKILL.md for it
