@@ -35,9 +35,9 @@ We will explain the difference between a simple LLM call and a real AI agent tha
 
 We will look at how to gradually integrate GenAI into existing testing processes without a "big bang" change. We will show where to start with quick wins — from generating test scenarios and planning tests, through review and maintenance, to generating test reports.
 
-### Introduction to MCP: Wopee.io, Playwright, GitHub, Jira
+### Introduction to MCP: Wopee.io, Playwright, GitHub, Jira, YouTrack
 
-Participants will be introduced to the concept of MCP (Model Context Protocol) and how it enables LLMs to work directly with tools such as Wopee.io, Playwright, GitHub, or Jira. Through practical examples, they will see how an AI agent can run tests, read issues, create tickets, or analyze results. In exercises, they will try what these integrations can look like.
+Participants will be introduced to the concept of MCP (Model Context Protocol) and how it enables LLMs to work directly with tools such as Wopee.io, Playwright, GitHub, Jira, or YouTrack. Through practical examples, they will see how an AI agent can run tests, read issues, create tickets, or analyze results. In exercises, they will try what these integrations can look like.
 
 ### The future of (AI?) testing
 
@@ -81,6 +81,7 @@ Please follow these steps before the workshop:
 9. Create a new project in [Wopee.io](https://cmd.wopee.io) and create a new API key (Project > Project Settings > API Keys).
 10. Copy .env.example to .env and fill in the values and set `WOPEE_API_KEY` and `WOPEE_PROJECT_UUID` with the values from your Wopee.io account.
 11. **Run tests:** Run `npm test` to verify everything is set up correctly.
-12. **Let me know you're ready** via LinkedIn chat, or ask any questions there.
+12. **Optional — YouTrack MCP:** If you use YouTrack, create a permanent token (**Profile > Account Security > New token**, scope **YouTrack**), add `YOUTRACK_AUTH_HEADER=Bearer perm:...` to your `.env`, and set your instance URL in `.vscode/mcp.json`. Full instructions: [experiment 6.6](./experiments/6_MCPs-and-Skills/6-YouTrackMCP/).
+13. **Let me know you're ready** via LinkedIn chat, or ask any questions there.
 
 > **Note:** Admin rights make it easier to install and access tools & resources (like AI APIs) we will use during the workshop.
