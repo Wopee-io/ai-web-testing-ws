@@ -17,7 +17,12 @@ Append `/mcp` to your YouTrack base URL:
 
 ### 2. Create a permanent token
 
-In YouTrack: **Profile** (avatar, top right) → **Account Security** → **New token…** → scope **YouTrack** → copy the token (`perm:...`).
+In YouTrack: **Profile** (avatar, top right) -> **Account Security** -> **New token...**
+
+1. Enter any token name
+2. Select **YouTrack** as the scope
+3. Add **YouTrack Administration** only if you need admin-level actions
+4. Click **Create** and copy the token value (`perm:...`).
 
 The MCP server acts with **your** permissions — the agent sees exactly the projects and issues you can see.
 
@@ -26,14 +31,16 @@ The MCP server acts with **your** permissions — the agent sees exactly the pro
 Copy `.env.example` to `.env` (if you have not already) and set:
 
 ```bash
-YOUTRACK_AUTH_HEADER=Bearer perm:your-token-here
+YOUTRACK_AUTH_HEADER="Bearer perm:your-token-here"
 ```
 
 `.env` is git-ignored — never commit the token.
 
 ### 4. Point the MCP config at your instance
 
-Both [`.vscode/mcp.json`](../../../.vscode/mcp.json) and [`.cursor/mcp.json`](../../../.cursor/mcp.json) already contain a `youtrack` server. Replace the placeholder host with your own:
+This workshop repo ships [`.vscode/mcp.json`](../../../.vscode/mcp.json), [`.cursor/mcp.json`](../../../.cursor/mcp.json), and [`.mcp.json`](../../../.mcp.json) preconfigured for `https://wopee.youtrack.cloud/mcp`.
+
+If you use a different YouTrack instance, replace that default host with your own. Generic example:
 
 ```json
 {
@@ -95,5 +102,5 @@ The YouTrack MCP server exposes ~23 tools. The ones used in this experiment:
 | `401 Unauthorized`                   | Token missing/expired, or the `.env` value lacks the `Bearer` prefix                           |
 | `404 Not Found`                      | URL must end with `/mcp`; check the instance host                                              |
 | Server starts but exposes no tools   | YouTrack version too old, or the MCP server is disabled by the admin — ask your YouTrack admin |
-| Token not picked up                  | `envFile` path is relative to the workspace root — open the repo folder itself, not a parent   |
+| Token not picked up                  | Quote the `.env` value if it contains spaces, and make sure `envFile` resolves from the repo root |
 | Stale credentials after token change | Clear the proxy cache: `rm -rf ~/.mcp-auth`, then restart the server                           |

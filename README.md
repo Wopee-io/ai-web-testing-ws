@@ -81,7 +81,7 @@ Please follow these steps before the workshop:
 9. Create a new project in [Wopee.io](https://cmd.wopee.io) and create a new API key (Project > Project Settings > API Keys).
 10. Copy .env.example to .env and fill in the values and set `WOPEE_API_KEY` and `WOPEE_PROJECT_UUID` with the values from your Wopee.io account.
 11. **Run tests:** Run `npm test` to verify everything is set up correctly.
-12. **Optional — YouTrack MCP:** If you use YouTrack, create a permanent token (**Profile > Account Security > New token**, scope **YouTrack**), add `YOUTRACK_AUTH_HEADER=Bearer perm:...` to your `.env`, and set your instance URL in `.vscode/mcp.json` (or `.mcp.json` for Claude Code). Full instructions: [experiment 6.6](./experiments/6_MCPs-and-Skills/6-YouTrackMCP/).
+12. **Optional — YouTrack MCP:** This repo's MCP configs are preconfigured for `https://wopee.youtrack.cloud/mcp`. If you use that instance, create a permanent token in **Profile > Account Security > New token...**, select **YouTrack** as the scope, then add `YOUTRACK_AUTH_HEADER="Bearer perm:..."` to your `.env`. If you need a different instance, use the generic setup in [experiment 6.6](./experiments/6_MCPs-and-Skills/6-YouTrackMCP/).
 13. **Optional — Claude Code:** If you prefer [Claude Code](https://claude.com/claude-code) over GitHub Copilot, this repo ships a project-scoped MCP config with the same servers. Start it with `npm run claude:mcp`. Full instructions: [docs/claude-code-mcp.md](./docs/claude-code-mcp.md).
 14. **Let me know you're ready** via LinkedIn chat, or ask any questions there.
 

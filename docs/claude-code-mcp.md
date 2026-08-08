@@ -29,16 +29,19 @@ Claude Code does not read `.env`. It expands `${...}` in `.mcp.json` from the **
 
 ## YouTrack (experiment 6.6)
 
-Two steps, the same as in VS Code and Cursor:
+For this workshop repo, `.mcp.json` already points at `https://wopee.youtrack.cloud/mcp`.
 
-1. In `.mcp.json`, replace the placeholder host `https://YOUR-INSTANCE.youtrack.cloud/mcp` with your instance URL
-2. Put the token in your `.env`:
+1. Create a permanent token in YouTrack: **Profile** -> **Account Security** -> **New token...**
+2. Give it any name, then select **YouTrack** as the scope. Add **YouTrack Administration** only if you explicitly need admin-level MCP actions.
+3. Put the token in your `.env`:
 
    ```bash
-   YOUTRACK_AUTH_HEADER=Bearer perm:your-token-here
+   YOUTRACK_AUTH_HEADER="Bearer perm:your-token-here"
    ```
 
-Skipping 6.6? Leave both as they are — the other three servers start regardless.
+4. If you need a different YouTrack instance, replace the default host with your own URL, for example `https://YOUR-INSTANCE.youtrack.cloud/mcp`
+
+Skipping 6.6? Leave it as is — the other three servers start regardless.
 
 Full YouTrack instructions, including how to create the token: [experiment 6.6](../experiments/6_MCPs-and-Skills/6-YouTrackMCP/).
 
@@ -49,4 +52,4 @@ Full YouTrack instructions, including how to create the token: [experiment 6.6](
 | `claude mcp list` shows a raw `${YOUTRACK_AUTH_HEADER:-}` | Display only — the listing prints the stored config, not the expanded value. The real value does reach the server. |
 | A server connects but every call is unauthorized          | Started with a bare `claude`, so `.env` was never loaded. Use `npm run claude:mcp`.                                |
 | `dotenv: command not found`                               | Dependencies not installed yet — run `npm install`.                                                                |
-| `youtrack` fails to connect                               | The placeholder host is still in `.mcp.json`, or the token is missing the `Bearer ` prefix.                        |
+| `youtrack` fails to connect                               | The host in `.mcp.json` points at the wrong instance, or the token is missing the `Bearer ` prefix.                |
