@@ -25,7 +25,7 @@
       "command": "npx",
       "args": [
         "mcp-remote",
-        "https://YOUR-INSTANCE.youtrack.cloud/mcp",
+        "https://wopee.youtrack.cloud/mcp",
         "--header",
         "Authorization:${YOUTRACK_AUTH_HEADER:-}"
       ]
