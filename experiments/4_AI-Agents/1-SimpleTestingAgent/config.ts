@@ -18,8 +18,8 @@ Simulate realistic user behavior by following these guidelines:
 // Saucedemo - Examples
 ////////////////////////////////////////////////////////////
 
-// export const baseUrl = "https://www.saucedemo.com/";
-export const baseUrl = "https://www.saucedemo.com/v1/";
+export const baseUrl = "https://www.saucedemo.com/";
+// export const baseUrl = "https://www.saucedemo.com/v1/";
 
 // // 1. Valid login test
 export const userPrompt = `
