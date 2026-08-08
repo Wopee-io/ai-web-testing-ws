@@ -1,0 +1,34 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["@playwright/mcp@latest"]
+    },
+    "atlassian": {
+      "type": "sse",
+      "url": "https://mcp.atlassian.com/v1/sse"
+    },
+    "wopee": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["wopee-mcp@latest"],
+      "env": {
+        "WOPEE_PROJECT_URL": "${WOPEE_PROJECT_URL:-}",
+        "WOPEE_PROJECT_UUID": "${WOPEE_PROJECT_UUID:-}",
+        "WOPEE_API_KEY": "${WOPEE_API_KEY:-}",
+        "WOPEE_API_URL": "${WOPEE_API_URL:-}"
+      }
+    },
+    "youtrack": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "mcp-remote",
+        "https://YOUR-INSTANCE.youtrack.cloud/mcp",
+        "--header",
+        "Authorization:${YOUTRACK_AUTH_HEADER:-}"
+      ]
+    }
+  }
+}
