@@ -68,7 +68,11 @@ export default defineConfig({
   snapshotPathTemplate: "baselines{/projectName}/{testFilePath}/{arg}{ext}",
   fullyParallel: true,
   timeout: 100000,
-  reporter: "@wopee-io/wopee.pw/wopee-reporter",
+  // Wopee.io reporter needs a configured project (.env) and per-test scenario wiring;
+  // fall back to the list reporter otherwise so `npm test` stays clean during setup.
+  reporter: process.env.WOPEE_API_KEY
+    ? "@wopee-io/wopee.pw/wopee-reporter"
+    : [["list"]],
   workers: 1,
   use: {
     baseURL: process.env.WOPEE_PROJECT_URL || "http://localhost:3000",

@@ -65,24 +65,25 @@ Please follow these steps before the workshop:
 
 1. **Connect with me via LinkedIn:** [linkedin.com/in/marcelveselka](https://www.linkedin.com/in/marcelveselka) — share your expectations and questions, and I will adjust the workshop based on that.
 2. **Submit this form:** [Google Form](https://forms.gle/8C4o9JTEmqUgSqoE6) — we'll make sure we are ready for you.
-3. **Install Node.js:** [nodejs.org/en/download](https://nodejs.org/en/download/)
-4. **Install GitHub CLI:** [cli.github.com](https://cli.github.com/)
-   - Windows: `winget install --id GitHub.cli`
-   - Mac: `brew install gh`
-   - Linux and other options: [installation guide](https://github.com/cli/cli#installation)
-   - Sign in: `gh auth login` → GitHub.com → HTTPS → authenticate in browser
-   - Verify: `gh auth status` should show you as logged in
-5. **Set up VS Code and Playwright:** [playwright.dev/docs/getting-started-vscode](https://playwright.dev/docs/getting-started-vscode)
-6. **Clone this repo (in VS Code):**
-   - Windows: `Ctrl+Shift+P` → Git: Clone → paste this repository URL
-   - Mac: `Cmd+Shift+P` → Git: Clone → paste this repository URL
-7. **Install dependencies:** Open the terminal in VS Code and run `npm install` to install all necessary packages.
-8. Create accounts for [GitHub](https://github.com) and [Wopee.io](https://wopee.io) using the same email address.
-9. Create a new project in [Wopee.io](https://cmd.wopee.io) and create a new API key (Project > Project Settings > API Keys).
-10. Copy .env.example to .env and fill in the values and set `WOPEE_API_KEY` and `WOPEE_PROJECT_UUID` with the values from your Wopee.io account.
-11. **Run tests:** Run `npm test` to verify everything is set up correctly.
-12. **Optional — YouTrack MCP:** This repo's MCP configs are preconfigured for `https://wopee.youtrack.cloud/mcp`. If you use that instance, create a permanent token in **Profile > Account Security > New token...**, select **YouTrack** as the scope, then add `YOUTRACK_AUTH_HEADER="Bearer perm:..."` to your `.env`. If you need a different instance, use the generic setup in [experiment 6.6](./experiments/6_MCPs-and-Skills/6-YouTrackMCP/).
-13. **Optional — Claude Code:** If you prefer [Claude Code](https://claude.com/claude-code) over GitHub Copilot, this repo ships a project-scoped MCP config with the same servers. Start it with `npm run claude:mcp`. Full instructions: [docs/claude-code-mcp.md](./docs/claude-code-mcp.md).
-14. **Let me know you're ready** via LinkedIn chat, or ask any questions there.
+3. **Install the tools:** [Node.js LTS](https://nodejs.org/en/download/), [Git](https://git-scm.com/downloads), and the [GitHub CLI](https://cli.github.com/) — then sign in with `gh auth login`. Windows users: see the [Windows notes](#windows-notes) below.
+4. **Set up VS Code and Playwright:** [playwright.dev/docs/getting-started-vscode](https://playwright.dev/docs/getting-started-vscode)
+5. **Clone this repo:** in VS Code, `Ctrl/Cmd+Shift+P` → Git: Clone → paste this repository URL, then run `npm install` in the VS Code terminal.
+6. **Set up Wopee.io:** create accounts for [GitHub](https://github.com) and [Wopee.io](https://wopee.io) (same email), create a project in [cmd.wopee.io](https://cmd.wopee.io) with an API key (Project > Project Settings > API Keys), then copy `.env.example` to `.env` and fill in `WOPEE_API_KEY` and `WOPEE_PROJECT_UUID`.
+7. **Verify:** run `npm test` — you should see `workshop setup check: Foodora homepage loads ... 1 passed`. Anything else: [setup troubleshooting](./docs/setup-troubleshooting.md).
+8. **Let me know you're ready** via LinkedIn chat, or ask any questions there.
+
+### Optional extras
+
+Not required for the workshop — set up any time if you want them:
+
+- **YouTrack MCP** — the repo's MCP configs are preconfigured for `https://wopee.youtrack.cloud/mcp`; create a permanent token and add it to `.env`. Full steps (and using your own instance): [experiment 6.6](./experiments/6_MCPs-and-Skills/6-YouTrackMCP/)
+- **Claude Code** — prefer it over GitHub Copilot? The repo ships a project-scoped MCP config with the same servers; start with `npm run claude:mcp`. Full instructions: [docs/claude-code-mcp.md](./docs/claude-code-mcp.md)
+
+### Windows notes
+
+Two things Windows attendees hit every time (details and fixes in [setup troubleshooting](./docs/setup-troubleshooting.md)):
+
+- **Git is not preinstalled** — `winget install --id Git.Git -e --source winget`, then reopen the terminal.
+- **PowerShell blocks npm** ("npm.ps1 cannot be loaded...") — `Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned`, no admin needed.
 
 > **Note:** Admin rights make it easier to install and access tools & resources (like AI APIs) we will use during the workshop.
