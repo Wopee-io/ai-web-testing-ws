@@ -1,4 +1,4 @@
-# Experiment 3.3: GitHub Copilot Testing Agent
+# Experiment 4.3: GitHub Copilot Testing Agent
 
 ## Introduction
 
@@ -66,7 +66,7 @@ gh auth login
 After login, you can just run:
 
 ```bash
-npm run e3.3
+npm run e4.3
 ```
 
 No manual export is needed because this project reads from `gh auth token` first.
@@ -92,21 +92,21 @@ GH_TOKEN=ghp_your_token_here
 
 ```bash
 export GH_TOKEN=ghp_your_token_here
-npm run e3.3
+npm run e4.3
 ```
 
 #### Windows PowerShell
 
 ```powershell
 $env:GH_TOKEN="ghp_your_token_here"
-npm run e3.3
+npm run e4.3
 ```
 
 #### Windows CMD
 
 ```bat
 set GH_TOKEN=ghp_your_token_here
-npm run e3.3
+npm run e4.3
 ```
 
 ### Option D: CI/CD secret environment variable
@@ -114,7 +114,7 @@ npm run e3.3
 In CI, set one of these secret env vars (recommended: `GH_TOKEN` or `GITHUB_TOKEN`) and run:
 
 ```bash
-npm run e3.3
+npm run e4.3
 ```
 
 ---
@@ -134,7 +134,7 @@ npm install @github/copilot-sdk @playwright/cli tsx
 ## Run
 
 ```bash
-npm run e3.3
+npm run e4.3
 ```
 
 ## Try It Yourself

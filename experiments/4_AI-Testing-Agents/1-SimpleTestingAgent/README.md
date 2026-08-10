@@ -1,14 +1,14 @@
-# Experiment 3.1: Simple AI Testing Agent
+# Experiment 4.1: Simple AI Testing Agent
 
 ## Introduction
 
-We will be coding together in this section. All work happens in `experiments/3_AI-Agents/1-SimpleTestingAgent/`.
+We will be coding together in this section. All work happens in `experiments/4_AI-Testing-Agents/1-SimpleTestingAgent/`.
 
 1. Explore the folder structure
 2. Set your `.env` file with your Azure OpenAI credentials (see `.env.example`)
 3. Explore `run-agent.spec.ts` and `agent.ts`
 4. Review config file: `config.ts`
-5. Run tests: `npm run e3.1`
+5. Run tests: `npm run e4.1`
 
 For more info about agents see: [Vercel AI SDK - Agents](https://sdk.vercel.ai/docs/foundations/agents)
 
@@ -37,7 +37,7 @@ This approach works for demos but has real-world limitations:
 4. **Code-heavy** — requires developers to write and maintain extensive tool code
 5. **Scalability issues** — hard to scale across multiple platforms and environments
 
-Experiment 3.2 (Wopee.io) and 3.3 (Copilot SDK) address these limitations with different approaches.
+Experiment 4.2 (Wopee.io) and 4.3 (Copilot SDK) address these limitations with different approaches.
 
 ## Try It Yourself
 

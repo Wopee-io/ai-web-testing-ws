@@ -52,7 +52,7 @@ Jira (Atlassian MCP)  →  Wopee.io (Wopee MCP)  →  Browser (Playwright MCP)
                         (comment back to Jira)
 ```
 
-This works today — see the [Copilot + MCP agent](../3_AI-Agents/3-GitHubCopilotAgent/) and the [skill evaluation report](./2-WopeeSkill/EVAL_REPORT.md).
+This works today — see the [Copilot + MCP agent](../4_AI-Testing-Agents/3-GitHubCopilotAgent/) and the [skill evaluation report](./2-WopeeSkill/EVAL_REPORT.md).
 
 ## Experiments
 
