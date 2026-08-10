@@ -12,12 +12,13 @@ Three approaches to building AI testing agents — from custom tools to zero-too
 
 ## Experiments
 
-| #   | Experiment                                            | Approach                                   | Key Tech                              |
-| --- | ----------------------------------------------------- | ------------------------------------------ | ------------------------------------- |
-| 4.1 | [Simple Testing Agent](./1-SimpleTestingAgent/)       | Custom tools (click, fill, screenshot)     | Vercel AI SDK + Playwright Page API   |
-| 4.2 | [Wopee.io Agent](./2-WopeeAgent/)                     | No-code platform with AI browser agent     | Wopee.io Commander                    |
-| 4.3 | [GitHub Copilot Agent](./3-GitHubCopilotAgent/)       | Zero custom tools — LLM calls CLI via bash | Copilot SDK + Playwright CLI          |
-| 4.4 | [Playwright Test Agents](./4-PlaywrightTestAgents/)   | Plan, generate, heal loop out of the box   | Playwright Test Agents + Copilot MCP  |
+| #   | Experiment                                                | Approach                                    | Key Tech                               |
+| --- | --------------------------------------------------------- | ------------------------------------------- | -------------------------------------- |
+| 4.1 | [Simple Testing Agent](./1-SimpleTestingAgent/)           | Custom tools (click, fill, screenshot)      | Vercel AI SDK + Playwright Page API    |
+| 4.2 | [Wopee.io Agent](./2-WopeeAgent/)                         | No-code platform with AI browser agent      | Wopee.io Commander                     |
+| 4.3 | [GitHub Copilot Agent](./3-GitHubCopilotAgent/)           | Zero custom tools — LLM calls CLI via bash  | Copilot SDK + Playwright CLI           |
+| 4.4 | [Playwright Test Agents](./4-PlaywrightTestAgents/)       | Plan, generate, heal loop out of the box    | Playwright Test Agents + Copilot MCP   |
+| 4.5 | [Playwright CLI](./5-PlaywrightCLI/)                      | Same loop, token-efficient: skill + shell   | playwright-cli + Copilot Agent Skills  |
 
 ## Progression
 
@@ -25,6 +26,7 @@ Three approaches to building AI testing agents — from custom tools to zero-too
 - **4.2** — Skip the code: use Wopee.io to crawl an app, generate test cases, and execute them with an AI agent
 - **4.3** — Minimal code (~40 lines): let the LLM figure out browser automation by calling `playwright-cli` commands directly
 - **4.4** — Zero code: drive Playwright's official planner, generator, and healer agents from VS Code Copilot
+- **4.5** — Slim down: the same plan → generate → heal loop via the Playwright CLI skill — snapshots stay on disk, every action emits TypeScript, ~4x fewer tokens than MCP
 
 ## Two Execution Paths
 
