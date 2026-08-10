@@ -1,6 +1,6 @@
 # Experiment 6.2: Wopee.io Skill
 
-A custom Claude skill (`wopee-fooddash-testing`) that teaches an AI agent to run the full Wopee.io testing lifecycle for the FoodDash demo app ([foodora.lovable.app](https://foodora.lovable.app/)): crawl the app, generate user stories and test cases, execute them with an AI browser agent, and review results.
+An agent skill (`wopee-fooddash-testing`) that teaches any coding agent (Claude Code, GitHub Copilot, Cursor, OpenCode...) to run the full Wopee.io testing lifecycle for the FoodDash demo app ([foodora.lovable.app](https://foodora.lovable.app/)): crawl the app, generate user stories and test cases, execute them with an AI browser agent, and review results.
 
 We evaluated the skill against an unguided baseline (same model, same MCP tools, same prompts, 6 scenarios, 27 graded assertions): **93% vs 67% pass rate (+26 pts), 2x faster, -15% tokens**.
 
