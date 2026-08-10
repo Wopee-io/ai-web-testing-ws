@@ -50,13 +50,13 @@ Commit these per repo so the whole team gets the same experience:
 - [ ] `AGENTS.md` (root) — cross-tool agent instructions (Copilot, Claude, Codex, Cursor)
 - [ ] `CLAUDE.md` (root or `.claude/`) — Claude-specific brief; readable by Copilot too
 
-## 5. Extensions (must-have for testers)
+## 5. Extensions (must-have for web app testers)
 
 - [ ] **GitHub Copilot Chat**
 - [ ] [**Playwright Test for VSCode**](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright)
 - [ ] [**Playwright MCP**](https://playwright.dev/mcp/introduction) (via `mcp.json`)
 - [ ] [**Playwright CLI**](https://playwright.dev/agent-cli/introduction)
-- [ ] **ESLint**, **Prettier**
+- [ ] ?? **ESLint**, **Prettier**
 
 ## 6. Customization Checklist (cover everything from [VS Code Copilot Customization](https://code.visualstudio.com/docs/copilot/customization/overview))
 
