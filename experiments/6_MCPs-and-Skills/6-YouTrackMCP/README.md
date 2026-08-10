@@ -77,7 +77,7 @@ You should get your YouTrack account name and the projects you have access to. I
 
 ## Available Tools
 
-The YouTrack MCP server exposes ~23 tools. The ones used in this experiment:
+The YouTrack MCP server exposes 23 tools (verified against YouTrack MCP 2026.2). The ones relevant to this experiment — note that `find_projects` takes a search `query` argument (empty string lists all), and `get_issue_fields_schema` wants `projectKey`:
 
 | Area       | Tools                                                                                                   |
 | ---------- | ------------------------------------------------------------------------------------------------------- |
@@ -90,10 +90,11 @@ The YouTrack MCP server exposes ~23 tools. The ones used in this experiment:
 ## Try It Yourself
 
 1. Verify the connection with the prompt in step 6 above
-2. Copy & paste [`1.prompt.md`](./1.prompt.md) into VS Code Chat — the agent triages your project's open bugs
-3. Copy & paste [`2.prompt.md`](./2.prompt.md) — the agent runs a quick test with Playwright MCP and files the result as a YouTrack issue
-4. Add the [`SKILL.md`](./SKILL.md) to your agent's context and re-run prompt 2 — compare the issue quality with and without the skill
-5. **Challenge:** chain it with Wopee.io MCP — fetch a failing visual test, then open a YouTrack bug with the screenshot link attached
+2. Copy & paste [`1.bug-triage.prompt.md`](./1.bug-triage.prompt.md) into VS Code Chat — the agent triages your project's open bugs
+3. Copy & paste [`2.test-and-report.prompt.md`](./2.test-and-report.prompt.md) — the agent runs a quick test with Playwright MCP and files the result as a YouTrack issue
+4. Copy & paste [`3.executive-summary.prompt.md`](./3.executive-summary.prompt.md) — the agent fetches live project data over MCP and turns it into a one-page executive quality report (great for demos)
+5. Add the [`SKILL.md`](./SKILL.md) to your agent's context and re-run prompt 2 — compare the issue quality with and without the skill
+6. **Challenge:** chain it with Wopee.io MCP — fetch a failing visual test, then open a YouTrack bug with the screenshot link attached
 
 ## Troubleshooting
 
@@ -102,5 +103,5 @@ The YouTrack MCP server exposes ~23 tools. The ones used in this experiment:
 | `401 Unauthorized`                   | Token missing/expired, or the `.env` value lacks the `Bearer` prefix                           |
 | `404 Not Found`                      | URL must end with `/mcp`; check the instance host                                              |
 | Server starts but exposes no tools   | YouTrack version too old, or the MCP server is disabled by the admin — ask your YouTrack admin |
-| Token not picked up                  | Quote the `.env` value if it contains spaces, and make sure `envFile` resolves from the repo root |
+| Token not picked up                  | Quote the `.env` value if it has spaces; ensure `envFile` resolves from the repo root          |
 | Stale credentials after token change | Clear the proxy cache: `rm -rf ~/.mcp-auth`, then restart the server                           |
