@@ -4,7 +4,7 @@
 
 A minimal AI testing agent using **GitHub Copilot SDK** + **Playwright CLI**.
 
-The agent reads test instructions from a config file and executes them autonomously — no custom tools needed. The LLM uses `playwright-cli` commands via shell to control the browser.
+The agent reads test instructions from a config file and executes them autonomously — no custom tools needed. The LLM uses `npx playwright cli` commands (bundled with Playwright 1.62+) via shell to control the browser.
 
 ## Architecture
 
@@ -18,7 +18,7 @@ run.ts     →  entry point
 **How it works:**
 
 1. Agent receives your test instructions
-2. LLM decides which `playwright-cli` commands to run
+2. LLM decides which `npx playwright cli` commands to run
 3. Built-in `bash` tool executes the commands
 4. LLM reads the output, decides next step
 5. Repeat until test is complete
@@ -27,14 +27,14 @@ run.ts     →  entry point
 
 Same Playwright engine, same team — different interface for the LLM:
 
-|                     | **CLI** (`@playwright/cli`)            | **MCP** (`@playwright/mcp`)                 |
+|                     | **CLI** (bundled: `npx playwright cli`)            | **MCP** (`@playwright/mcp`)                 |
 | ------------------- | -------------------------------------- | ------------------------------------------- |
 | **Transport**       | Daemon + shell commands                | JSON-RPC server                             |
 | **Context cost**    | ~27K tokens/session                    | ~114K tokens/session                        |
 | **Interactions**    | 50+ stable interactions                | ~15 before degradation                      |
 | **Cost**            | 4x cheaper                             | Richer reasoning                            |
 | **Context loading** | SKILLS system (progressive)            | Full accessibility tree                     |
-| **Observability**   | Live dashboard (`playwright-cli show`) | Client-dependent                            |
+| **Observability**   | Live dashboard (`npx playwright cli show`) | Client-dependent                            |
 | **Best for**        | Agents with shell access               | Sandboxed environments, exploratory testing |
 
 > Use both: CLI as primary (agents with shell), MCP as fallback (sandboxed UIs).
@@ -128,7 +128,7 @@ If you want, we can add a BYOK mode switch so it can run without GitHub token wh
 ## Setup
 
 ```bash
-npm install @github/copilot-sdk @playwright/cli tsx
+npm install /copilot-sdk tsx
 ```
 
 ## Run
