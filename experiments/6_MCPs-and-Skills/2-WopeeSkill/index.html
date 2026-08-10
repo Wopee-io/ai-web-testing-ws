@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wopee.io Skill Evaluation Report — FoodDash</title>
+<title>Wopee.io Skill Evaluation Report</title>
 <style>
   :root {
     --bg: #0f1117;
@@ -129,21 +129,21 @@
   <div class="header">
     <div class="badge">Evaluation Report</div>
     <h1>How an AI Skill Improves <span>Wopee.io Test Automation</span></h1>
-    <p class="subtitle">We evaluated a custom Claude skill for FoodDash QA automation across 6 real-world test scenarios, comparing skill-guided behavior against unguided baseline performance.</p>
+    <p class="subtitle">We evaluated the wopee-testing agent skill across 9 real-world QA scenarios (August 2026 rerun on wopee-mcp 1.29.0, executor Claude Opus 4.6), comparing skill-guided behavior against unguided baseline performance. Headline: 93.5% vs 71% assertion pass rate.</p>
   </div>
 
   <!-- Hero Stats -->
   <div class="hero-stats">
     <div class="hero-stat">
-      <div class="value green">+26%</div>
+      <div class="value green">+22.5 pts</div>
       <div class="label">Pass Rate Improvement</div>
     </div>
     <div class="hero-stat">
-      <div class="value blue">2x Faster</div>
+      <div class="value blue">~30% Faster</div>
       <div class="label">Average Execution Speed</div>
     </div>
     <div class="hero-stat">
-      <div class="value accent">-15%</div>
+      <div class="value accent">9 Scenarios</div>
       <div class="label">Token Usage Reduction</div>
     </div>
   </div>
@@ -167,7 +167,7 @@
       <div class="insight">
         <div class="emoji">&#x1F3AF;</div>
         <div class="title">MCP Namespace Accuracy</div>
-        <div class="desc">The skill's biggest win: ensuring the correct <code>mcp__Wopee_io_-_FoodDash__</code> namespace is used consistently. Without it, agents often mix namespaces, causing silent failures or operating on the wrong project entirely.</div>
+        <div class="desc">The skill's biggest win in the rerun: process discipline. The unguided baseline skipped the real crawl entirely and hand-wrote the app context; the output looked plausible but was not grounded in the live app. The skill run dispatched a real analysis with rich instructions.</div>
       </div>
       <div class="insight">
         <div class="emoji">&#x1F4CB;</div>
@@ -177,7 +177,7 @@
       <div class="insight">
         <div class="emoji">&#x26A1;</div>
         <div class="title">Efficiency Gains</div>
-        <div class="desc">Skill-guided agents complete tasks in 52.7s average vs 109.2s baseline. They're more focused — fewer exploratory tool calls, less trial and error, and 15% fewer tokens consumed per task.</div>
+        <div class="desc">Skill-guided agents finish in 50.8s median vs 72.5s baseline (means 102.3s vs 128.4s incl. one baseline timeout). They're more focused: fewer exploratory tool calls and less trial and error.</div>
       </div>
       <div class="insight">
         <div class="emoji">&#x1F50D;</div>
@@ -190,7 +190,7 @@
   <!-- Methodology -->
   <div class="section">
     <h2>Evaluation Methodology</h2>
-    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Each scenario was run twice: once with the skill loaded, once without. Both used Claude Opus 4.6 with access to the same Wopee.io MCP tools. Assertions were graded against the actual tool call transcripts.</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-bottom:16px;">Each scenario was run twice: once with the skill available, once without. Both used Claude Opus 4.6 with the same Wopee.io MCP tools (wopee-mcp 1.29.0). Assertions were graded against the actual tool call transcripts; assertions blocked by missing API key scopes were excluded. Full August data: benchmark.json + EVAL_REPORT.md. The per-scenario cards below show the original April 2026 run for comparison.</p>
     <div class="method-grid">
       <div class="method-step">
         <div class="step-num">1</div>
@@ -216,7 +216,7 @@
   </div>
 
   <div class="footer">
-    Wopee.io &times; Claude &mdash; Skill Evaluation Report &mdash; Generated April 13, 2026
+    Wopee.io Skill Evaluation Report &mdash; August 10, 2026 rerun (per-scenario cards: April 13, 2026 archive)
   </div>
 </div>
 

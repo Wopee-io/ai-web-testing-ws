@@ -1,221 +1,80 @@
 # Wopee.io Skill Evaluation Report
 
-**Skill:** `wopee-fooddash-testing`
-**Application:** FoodDash ([foodora.lovable.app](https://foodora.lovable.app/))
-**Model:** Claude Opus 4.6
-**Date:** April 13, 2026
+**Skill:** `wopee-testing` (generalized successor of `wopee-fooddash-testing`)
+**Application:** saucedemo demo project ([saucedemo.com](https://www.saucedemo.com)) via Wopee.io
+**Executor model:** Claude Opus 4.6 (same as April) | **Analyzer:** Claude Opus 5
+**Wopee.io MCP:** `wopee-mcp` 1.29.0 (15 tools)
+**Date:** August 10, 2026 (rerun of the April 13, 2026 evaluation)
 
 ---
 
 ## Overview
 
-We built a custom Claude skill that guides AI agents through Wopee.io's test automation platform — covering app analysis, test artifact generation, test execution, and result review. To measure its impact, we ran 6 real-world QA scenarios twice each: once with the skill loaded, once without. Both configurations used the same model, the same MCP tools, and the same prompts. We graded 27 assertions against actual tool call transcripts.
+We re-ran the skill-vs-baseline evaluation after three months of Wopee.io MCP evolution: the server grew from 8 to 15 tools, the skill was generalized away from the retired FoodDash project, and three new scenarios were added to cover the new tool surface (test inventory, chat summaries, GitHub issue reporting). As in April: each scenario runs twice with the same model, tools, and prompts - once with the skill available, once without - and assertions are graded against the actual tool-call transcripts.
 
-### Headline Results
+### Headline Results (31 graded assertions per configuration)
 
 | Metric | With Skill | Baseline | Delta |
-|--------|-----------|----------|-------|
-| **Pass Rate** | 93% | 67% | **+26 pts** |
-| **Avg Execution Time** | 52.7s | 109.2s | **2x faster** |
-| **Avg Token Usage** | 60,383 | 70,783 | **-15%** |
+| --- | --- | --- | --- |
+| **Pass Rate** | 93.5% (29/31) | 71.0% (22/31) | **+22.5 pts** |
+| **Median Execution Time** | 50.8s | 72.5s | **~30% faster** |
+| **Mean Execution Time** | 102.3s | 128.4s (incl. one 420s timeout) | faster |
 
----
+Token totals in `benchmark.json` include prompt-cache reads (headless CLI metric) and are **not comparable** to the April report's token figures.
+
+### April vs August
+
+| | April 2026 | August 2026 |
+| --- | --- | --- |
+| Scenarios | 6 | 9 (6 adapted + 3 new-tool) |
+| `wopee-mcp` | 1.23.x (8 tools) | 1.29.0 (15 tools) |
+| Pass rate gap | +26 pts (93% vs 67%) | +22.5 pts (93.5% vs 71%) |
+
+The gap narrowed slightly but **held**. The reason it narrowed is instructive: the 1.29.0 tool descriptions are much richer (e.g. `wopee_fetch_test_inventory` describes itself as "the authoritative tool"), so the unguided baseline now finds the right read tool far more often. The reason it held is equally instructive: the skill's advantage has shifted from *tool discovery* to *process discipline* - see findings.
 
 ## Evaluation Scenarios
 
-### Eval 1 — List Suites
+| # | Scenario | With Skill | Baseline |
+| --- | --- | --- | --- |
+| 1 | List Suites | 4/4 | 4/4 |
+| 2 | Full Coverage From Scratch | 5/5 | **1/5** |
+| 3 | Run Specific Tests | 3/4 | 2/4 |
+| 4 | Latest Results | 2/2 graded (2 blocked) | 2/2 graded (2 blocked) |
+| 5 | Rerun Analysis + Regenerate | 3/4 | 3/4 |
+| 6 | Coverage Check For Bug Report | 4/4 | 4/4 |
+| 7 | Test Inventory (new) | 4/4 | 4/4 |
+| 8 | Recent Executions + Chat (new) | 3/3 graded (1 blocked) | 2/3 graded (1 blocked) |
+| 9 | Failing Test -> GitHub Issue (new) | 1/1 graded (3 blocked) | 1/1 graded (3 blocked) |
 
-**Prompt:** *"What test suites exist in the FoodDash project? Show me what's been generated for each one."*
-
-| | With Skill | Baseline |
-|---|-----------|----------|
-| **Pass Rate** | 100% (4/4) | 100% (4/4) |
-| **Time** | 22.5s | 36.8s |
-| **Tokens** | 55,454 | 64,184 |
-
-| Assertion | With Skill | Baseline |
-|-----------|:---:|:---:|
-| Uses correct `mcp__Wopee_io_-_FoodDash__` namespace | PASS | PASS |
-| Calls `wopee_fetch_analysis_suites` | PASS | PASS |
-| Presents suite names and analysis identifiers | PASS | PASS |
-| Shows artifact generation status | PASS | PASS |
-
-**Takeaway:** Both configurations handle this simple discovery task well. The skill is 39% faster since it doesn't explore unnecessary tools.
-
----
-
-### Eval 2 — Generate Full Test Coverage
-
-**Prompt:** *"I want to generate full test coverage for the FoodDash app. Start from scratch — analyze the app and build out user stories and test cases."*
-
-| | With Skill | Baseline |
-|---|-----------|----------|
-| **Pass Rate** | 60% (3/5) | 20% (1/5) |
-| **Time** | 93.0s | 269.4s |
-| **Tokens** | 73,526 | 103,634 |
-
-| Assertion | With Skill | Baseline |
-|-----------|:---:|:---:|
-| Uses correct `mcp__Wopee_io_-_FoodDash__` namespace | PASS | FAIL |
-| Calls `wopee_dispatch_analysis` to start crawl | PASS | FAIL |
-| Generates APP_CONTEXT before user stories | FAIL | FAIL |
-| Generates GENERAL_USER_STORIES before test cases | PASS | PASS |
-| Follows correct artifact generation order | FAIL | FAIL |
-
-**Takeaway:** The skill's biggest advantage here is namespace accuracy and knowing to use `dispatch_analysis` (the baseline used `create_blank_suite` on the wrong namespace). Both struggled with strict artifact ordering — an area for skill improvement. Still, the skill scored 3x higher and completed nearly 3x faster.
-
----
-
-### Eval 3 — Run Tests by ID
-
-**Prompt:** *"Run A001 TC001 and TC002 from US001."*
-
-| | With Skill | Baseline |
-|---|-----------|----------|
-| **Pass Rate** | 100% (5/5) | 80% (4/5) |
-| **Time** | 48.3s | 51.5s |
-| **Tokens** | 56,188 | 62,324 |
-
-| Assertion | With Skill | Baseline |
-|-----------|:---:|:---:|
-| Uses correct `mcp__Wopee_io_-_FoodDash__` namespace | PASS | FAIL |
-| Resolves A001 to suite UUID via suites list | PASS | PASS |
-| Dispatches agent for US001:TC001 and US001:TC002 | PASS | PASS |
-| Uses correct analysisIdentifier A001 | PASS | PASS |
-| Fetches execution results after dispatching | PASS | PASS |
-
-**Takeaway:** The baseline mostly succeeded here but mixed in one `mcp__wopee__` call for fetching results, which would have queried the wrong project's data. The skill prevented this entirely.
-
----
-
-### Eval 4 — Fetch Test Results
-
-**Prompt:** *"Show me the latest test results for A001. Which tests passed and which failed?"*
-
-| | With Skill | Baseline |
-|---|-----------|----------|
-| **Pass Rate** | 100% (4/4) | 50% (2/4) |
-| **Time** | 25.1s | 43.0s |
-| **Tokens** | 55,333 | 61,079 |
-
-| Assertion | With Skill | Baseline |
-|-----------|:---:|:---:|
-| Uses correct `mcp__Wopee_io_-_FoodDash__` namespace | PASS | FAIL |
-| Resolves A001 to its suite UUID | PASS | PASS |
-| Calls `wopee_fetch_executed_test_cases` | PASS | FAIL |
-| Presents pass/fail status for each test case | PASS | PASS |
-
-**Takeaway:** The baseline mixed namespaces and failed to call the correct result-fetching tool. The skill completed the task cleanly in half the time.
-
----
-
-### Eval 5 — Re-run Analysis
-
-**Prompt:** *"The app was just updated. Re-run the analysis for A001 to pick up the changes, then regenerate the test cases."*
-
-| | With Skill | Baseline |
-|---|-----------|----------|
-| **Pass Rate** | 100% (4/4) | 50% (2/4) |
-| **Time** | 61.3s | 174.7s |
-| **Tokens** | 56,239 | 71,361 |
-
-| Assertion | With Skill | Baseline |
-|-----------|:---:|:---:|
-| Uses correct `mcp__Wopee_io_-_FoodDash__` namespace | PASS | PASS |
-| Uses `dispatch_analysis` with rerun parameter | PASS | FAIL |
-| References A001 suite UUID and identifier in rerun | PASS | FAIL |
-| Regenerates artifacts in correct order | PASS | PASS |
-
-**Takeaway:** This is where the skill's domain knowledge matters most. The baseline created an entirely new suite (A005) instead of re-running A001, losing suite continuity and history. The skill knew to use the `rerun` parameter, completing the task 2.8x faster.
-
----
-
-### Eval 6 — Coverage vs Bug Report
-
-**Prompt:** *"We got a bug report that the forgot-password link is broken. Check if we have test coverage for that in A001, and if so, run those specific tests."*
-
-| | With Skill | Baseline |
-|---|-----------|----------|
-| **Pass Rate** | 100% (5/5) | 100% (5/5) |
-| **Time** | 66.2s | 79.8s |
-| **Tokens** | 65,555 | 62,118 |
-
-| Assertion | With Skill | Baseline |
-|-----------|:---:|:---:|
-| Uses correct `mcp__Wopee_io_-_FoodDash__` namespace | PASS | PASS |
-| Fetches USER_STORIES to examine coverage | PASS | PASS |
-| Identifies US001:TC004 (forgot-password) | PASS | PASS |
-| Dispatches agent for relevant test cases | PASS | PASS |
-| Reports coverage match against bug report | PASS | PASS |
-
-**Takeaway:** Both configurations handled this well. The task is concrete enough ("forgot-password" maps clearly to a test case name) that the agent found its way without skill guidance. The skill was slightly faster.
-
----
-
-## Summary by Scenario
-
-| # | Scenario | With Skill | Baseline | Delta |
-|---|----------|:---:|:---:|:---:|
-| 1 | List Suites | 100% | 100% | tied |
-| 2 | Generate Coverage | 60% | 20% | **+40 pts** |
-| 3 | Run Tests by ID | 100% | 80% | **+20 pts** |
-| 4 | Fetch Results | 100% | 50% | **+50 pts** |
-| 5 | Re-run Analysis | 100% | 50% | **+50 pts** |
-| 6 | Coverage vs Bug | 100% | 100% | tied |
-| | **Average** | **93%** | **67%** | **+26 pts** |
-
----
+"Blocked" assertions could not be graded because the Wopee.io API restricts execution-results and chat GraphQL fields to user-session (JWT) auth; project API keys are rejected by design and no key scope exists that changes this (verified in the backend source - see the README's "Why Some Tools Fail" section). Blocked assertions hit both configurations identically and are excluded from pass rates; regrading awaits either backend api-key paths or a rerun with a user JWT.
 
 ## Key Findings
 
-### 1. MCP Namespace Routing Is the #1 Failure Mode
+### 1. The baseline's biggest failure is silent and looks like success
 
-The most common baseline failure was using the wrong MCP namespace. The FoodDash project requires `mcp__Wopee_io_-_FoodDash__` tools, but agents without the skill frequently mixed in `mcp__wopee__` calls — which silently route to a different project with different suites and data. This caused failures in evals 2, 3, and 4. The skill eliminates this entirely by explicitly instructing which namespace to use.
+In scenario 2 ("build full coverage from scratch"), the baseline **skipped the crawl entirely**: it created a blank suite and hand-wrote the APP_CONTEXT from a quick page fetch, then generated test artifacts on top of that invented foundation. The output looked plausible (43 test cases!) but was not grounded in a real crawl of the app. The skill run dispatched a real analysis with rich `additionalInstructions`. This is exactly the failure mode a process skill exists to prevent, and it is nearly invisible in casual review.
 
-### 2. Domain Knowledge Enables Correct Tool Sequencing
+### 2. Tool discovery no longer needs the skill; workflow discipline still does
 
-The Wopee.io platform has implicit dependencies (artifact generation order, rerun vs new suite, resolving short IDs to UUIDs) that aren't obvious from the tool descriptions alone. The skill encodes this knowledge so agents follow the correct workflow without trial and error.
+The baseline found `wopee_fetch_test_inventory` unprompted (scenario 7) and even used the `rerun` parameter correctly (scenario 5). Richer tool descriptions have absorbed much of what the April skill taught. What the descriptions cannot teach: generation order, crawl-first discipline, one-chat-message-not-two (scenario 8 baseline double-posted), and resolving suites through the canonical listing (scenario 3).
 
-### 3. Skills Make Agents Faster and Cheaper
+### 3. The skill itself had a gap: polling without backoff
 
-Skill-guided agents averaged 52.7s per task vs 109.2s baseline — a 2x speedup. They also consumed 15% fewer tokens. The efficiency gain comes from eliminating exploratory tool calls and reducing error-recovery cycles.
+The with-skill run of scenario 5 polled `wopee_fetch_analysis_suites` ~30 times in a tight loop waiting for the re-crawl, burning its whole turn budget before regenerating artifacts. The refreshed skill now includes explicit wait-and-poll guidance. Evals cut both ways: this one found a bug in the skill, not the agent.
 
-### 4. Simple Tasks Don't Need Skills
+### 4. Both configurations degrade gracefully on missing permissions
 
-Evals 1 and 6 show that for straightforward tasks (listing suites, searching for a named test case), the baseline performs equally well. The skill's value concentrates on multi-step workflows where ordering, namespace choice, and parameter knowledge matter.
+When execution endpoints returned `Not Authorised!`, both runs correctly diagnosed a permissions issue, fell back to the data they could read (test inventory), and reported the limitation to the user instead of hallucinating results. Neither invented pass/fail data. One caveat discovered later in the source: `wopee_fetch_test_inventory` itself silently degrades under an API key - it reports every test as `NOT_RUN` even after tests were dispatched, so the agents' "no tests have been executed" summaries were faithful to the tool output but not to reality. The eval also explained the intermittent `wopee_generate_artifact` failures: three of the seven `generate*` mutations are missing from the API's api-key allowlist.
 
----
+## Methodology Notes
 
-## Methodology
+- Harness: headless `claude -p` runs from isolated workspaces, one with the skill in `.claude/skills/`, one without; project-scoped MCP config; sequential execution with 15s spacing; 420s timeout; max 40 turns.
+- The skill was *available*, not force-invoked: the model chose to load it in 5 of 9 with-skill runs, which mirrors real usage.
+- Scenario prompts were minimally debranded from April (the FoodDash project no longer exists); original assertion intent preserved, namespace assertions replaced by tool-usage assertions.
+- Raw per-run data, all 62 assertion verdicts with evidence, and aggregates: [benchmark.json](./benchmark.json). Scenario definitions: [evals.json](./evals.json).
 
-**Setup:** 6 evaluation scenarios, each run as two independent Claude Opus 4.6 agent sessions — one with the skill loaded into context, one without. Both had access to the same Wopee.io MCP tools.
+## Takeaways
 
-**Execution:** All 12 runs launched in parallel. Each agent recorded a full transcript of tool calls made, parameters used, responses received, and final output.
-
-**Grading:** 27 assertions graded against actual tool call transcripts (not self-reported output). Each assertion checked a specific behavior: correct namespace, correct tool, correct parameter, correct sequencing.
-
-**Metrics captured:** Pass rate (assertions passed / total), wall-clock execution time, and token consumption per run.
-
----
-
-## Skill Improvements Made During Evaluation
-
-Based on findings from the eval runs, two improvements were applied to the skill before final packaging:
-
-1. **`additionalInstructions` guidance** — The skill now instructs agents to always pass `additionalInstructions` when dispatching or re-running analysis, providing the crawler with focus areas and context. This improves crawl quality.
-
-2. **Short ID resolution guidance** — Added explicit instructions for mapping user-friendly references (A001, TC001, US001) to internal UUIDs, including handling cases where only a TC id is provided without a US id.
-
----
-
-## Files in This Report
-
-| File | Description |
-|------|-------------|
-| `EVAL_REPORT.md` | This report |
-| `index.html` | Interactive evaluation dashboard |
-| `infographic-1-metrics.html` | Slide-ready metrics infographic (1920x1080) |
-| `infographic-2-methodology.html` | Slide-ready methodology infographic (1920x1080) |
-| `benchmark.json` | Raw benchmark data (all 12 runs with assertions) |
-| `evals.json` | The 6 evaluation prompts and expected outputs |
-| `SKILL.md` | The evaluated skill |
+1. **Keep skills for process, not for tool lists.** Tool descriptions are self-documenting now; encode ordering, guardrails, and verification discipline instead.
+2. **Evaluate skills after every major MCP upgrade.** The value proposition of this skill changed shape between 1.23 and 1.29 without a single line of the skill changing.
+3. **Grade against transcripts, not final answers.** The baseline's scenario-2 answer read beautifully; only the tool-call transcript revealed the skipped crawl.

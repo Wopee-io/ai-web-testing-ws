@@ -1,34 +1,35 @@
 ---
-name: wopee-fooddash-testing
-description: "End-to-end AI test automation for the FoodDash web app using Wopee.io. Use this skill whenever the user wants to test, analyze, or QA the FoodDash application — including crawling the app, generating user stories and test cases, executing tests with an AI browser agent, or reviewing test results. Trigger on mentions of: Wopee, FoodDash, test suite, test cases, user stories, run tests, test results, QA, analysis suite, crawl the app, or any request to verify FoodDash functionality."
+name: wopee-testing
+description: "End-to-end AI test automation for a web app using Wopee.io. Use this skill whenever the user wants to test, analyze, or QA the application configured in the Wopee project — including crawling the app, generating user stories and test cases, executing tests with an AI browser agent, reviewing results and test inventory, managing run-time variables, posting to the project chat, or reporting bugs as GitHub issues. Trigger on mentions of: Wopee, test suite, test cases, user stories, run tests, test results, test inventory, QA, analysis suite, crawl the app, or any request to verify app functionality."
 ---
 
-# Wopee.io FoodDash Testing
+# Wopee.io Testing
 
-This skill orchestrates AI-powered test automation for the FoodDash web application (https://foodora.lovable.app/) using the Wopee.io platform. It covers the full testing lifecycle: analyzing the app, generating test artifacts, executing tests via an autonomous browser agent, and reviewing results.
+This skill orchestrates AI-powered test automation using the Wopee.io platform against the web application configured in the current Wopee project. It covers the full testing lifecycle: analyzing the app, generating test artifacts, executing tests via an autonomous browser agent, reviewing results, and reporting findings.
 
-## Important: Use the correct MCP namespace
+## Important: Verify you are on the right project
 
-All tool calls MUST use the **workspace-specific** MCP prefix:
-
-```
-mcp__Wopee_io_-_FoodDash__wopee_*
-```
-
-Do NOT use `mcp__wopee__wopee_*` — that points to a different project. Getting this wrong means you'll be working with the wrong test suites entirely.
+Different Wopee MCP server entries can point to different projects. Before mutating anything, call `wopee_fetch_analysis_suites` and sanity-check that the suites you see match the project the user is talking about. If the host environment exposes more than one Wopee server, confirm with the user which one to use. Working against the wrong project is the most damaging mistake this skill can make.
 
 ## Tools Available
 
 | Tool | Purpose |
 |---|---|
 | `wopee_fetch_analysis_suites` | List all existing suites (no params needed) |
-| `wopee_dispatch_analysis` | Crawl the live app and create a new analysis suite |
+| `wopee_dispatch_analysis` | Crawl the live app and create a new analysis suite (or re-run with `rerun`) |
 | `wopee_create_blank_suite` | Create an empty suite for manual population |
 | `wopee_generate_artifact` | AI-generate test artifacts for a suite |
 | `wopee_fetch_artifact` | Retrieve generated artifacts to review |
 | `wopee_update_artifact` | Replace artifact content (destructive overwrite) |
 | `wopee_dispatch_agent` | Execute test cases with an AI browser agent |
-| `wopee_fetch_executed_test_cases` | Get test execution results |
+| `wopee_fetch_executed_test_cases` | Fetch execution results for a suite |
+| `wopee_fetch_test_inventory` | **Authoritative test count + latest status per test, including never-run (`NOT_RUN`)** |
+| `wopee_fetch_recent_executions` | Last 20 executions, newest first — no suite UUID needed |
+| `wopee_fetch_variables` | Read run-time variables at `PROJECT` or `ANALYSIS` level |
+| `wopee_update_variables` | Upsert run-time variables at `PROJECT` or `ANALYSIS` level |
+| `wopee_send_chat_message` | Post a status/info message to the project chat room |
+| `wopee_read_chat_history` | Read recent project chat messages |
+| `wopee_create_github_issue` | File an issue in the project's connected GitHub repository |
 
 ## Workflow Overview
 
@@ -71,6 +72,8 @@ Artifacts must be generated in a specific order because each layer builds on the
 
 For each artifact type, call `wopee_generate_artifact` with the suite UUID and the type. Generation is asynchronous — after triggering it, use `wopee_fetch_artifact` to check if the content is ready.
 
+**Polling discipline (applies to crawls, generation, and agent runs):** never poll in a tight loop. Wait 30-60 seconds between status checks (crawls typically take 1-2 minutes, agent runs 30-60 seconds per test). If nothing changed after ~5 checks, stop and tell the user what is still running rather than burning turns on further polling.
+
 **To review artifacts**, call `wopee_fetch_artifact` with the suite UUID and one of these types:
 - `APP_CONTEXT` — returns the application context report (markdown)
 - `GENERAL_USER_STORIES` — returns high-level user stories (markdown)
@@ -112,21 +115,41 @@ Example:
 
 The agent opens a real browser, navigates the app, follows each test case's steps, captures screenshots, and reports pass/fail with detailed findings.
 
-### Phase 4: Review Results
+### Phase 4: Review Results and Status
 
-After dispatching tests, check results with `wopee_fetch_executed_test_cases`:
-- Pass the `suiteUuid` (required) and optionally the `analysisIdentifier` to filter.
-- Each result includes: execution status (`IN_PROGRESS`, `FINISHED`, `FAILED`), an agent report (natural language findings), and a code report (technical details).
-- If status is `IN_PROGRESS`, wait and call again.
+Three tools cover different status questions — pick the right one instead of re-crawling or guessing:
 
-Present results to the user in a clear format, highlighting any failures and the agent's findings.
+- **"How did the tests I just ran go?"** → `wopee_fetch_executed_test_cases` with the `suiteUuid` (optionally filter by `analysisIdentifier`). Each result includes execution status (`IN_PROGRESS`, `FINISHED`, `FAILED`), an agent report (natural language findings), and a code report (technical details). If status is `IN_PROGRESS`, wait and call again.
+- **"What ran recently?"** → `wopee_fetch_recent_executions` — the last 20 executions across the project, newest first, no UUIDs needed.
+- **"How many tests do we have and where do they stand?"** → `wopee_fetch_test_inventory` — the authoritative per-analysis list of authored test cases joined with their latest execution status, including never-run ones as `NOT_RUN`. Use this for coverage and inventory questions; do not reconstruct counts from artifacts.
+
+Present results in a clear format, highlighting any failures and the agent's findings.
+
+## Run-Time Variables
+
+Analyses and agent runs are driven by run-time variables (`additionalVariables`) — credentials, base URLs, feature flags:
+
+- `wopee_fetch_variables` with `level: PROJECT` reads project-level variables; `level: ANALYSIS` (plus the suite UUID) reads analysis-level overrides.
+- `wopee_update_variables` upserts at either level. Fetch first, then update — unknown keys you omit are preserved, but always confirm destructive changes with the user.
+- Typical uses: setting test-user credentials before a crawl, pointing an analysis at a staging URL, toggling app feature flags for a run.
+
+## Collaboration and Reporting
+
+- **Project chat**: post status updates ("Test run started...", "Analysis complete, 12 test cases generated") with `wopee_send_chat_message`; catch up on context with `wopee_read_chat_history`. Messages appear as SYSTEM messages.
+- **GitHub issues**: when a test failure reflects a real app bug (not a stale test), file it with `wopee_create_github_issue` into the project's connected repository. Write a precise title, and include in the body: the failing test id (e.g., `US001:TC003`), what was expected, what happened, and the agent's findings. Report the created issue URL back to the user.
 
 ## Common User Requests and How to Handle Them
 
 **"What test suites do we have?"**
 → Call `wopee_fetch_analysis_suites`, summarize the results.
 
-**"Analyze the app" / "Crawl FoodDash"**
+**"How many test cases exist?" / "Which tests never ran?" / "Coverage status?"**
+→ Call `wopee_fetch_test_inventory`. Summarize per analysis: total authored, passed, failed, `NOT_RUN`.
+
+**"What happened recently?" / "Any runs today?"**
+→ Call `wopee_fetch_recent_executions`, summarize newest first.
+
+**"Analyze the app" / "Crawl the app"**
 → Call `wopee_dispatch_analysis` with `additionalInstructions` describing what the crawler should focus on (ask the user if unclear). Always provide instructions — they significantly improve crawl quality.
 
 **"Re-run the analysis for A001"**
@@ -145,10 +168,19 @@ Present results to the user in a clear format, highlighting any failures and the
 → Call `wopee_fetch_executed_test_cases` with the suite UUID (and optionally the analysis identifier to filter). Present each test case's status, the agent's natural language report, and any technical findings. Highlight failures prominently.
 
 **"Compare results against requirements" / "Coverage analysis"**
-→ Fetch the USER_STORIES artifact to get the full list of test cases and their expected behaviors. Also fetch executed test case results. Cross-reference what's been tested vs. what exists — identify untested stories, failing tests, and gaps. If the user provides external requirements or bug reports, compare the test coverage against those to find missing scenarios.
+→ Start from `wopee_fetch_test_inventory` for the authoritative authored-vs-executed picture. Fetch the USER_STORIES artifact for expected behaviors and cross-reference — identify untested stories, failing tests, and gaps. If the user provides external requirements or bug reports, compare the test coverage against those to find missing scenarios.
 
 **"Update this test case" / "Edit the user stories"**
 → Fetch the current artifact, apply the user's changes, then call `wopee_update_artifact` with the full updated content.
+
+**"Set the test credentials" / "Change the base URL for runs"**
+→ `wopee_fetch_variables` first, then `wopee_update_variables` at the appropriate level. Confirm before overwriting existing values.
+
+**"Report this bug" / "File an issue for the failing test"**
+→ Identify the failing execution (via `wopee_fetch_recent_executions` or `wopee_fetch_executed_test_cases`), then `wopee_create_github_issue` with a precise title and a body containing the test id, expected vs actual, and the agent's findings. Share the issue link.
+
+**"Post an update to the team"**
+→ `wopee_send_chat_message` with a concise status summary.
 
 ## Tips
 
@@ -156,6 +188,7 @@ Present results to the user in a clear format, highlighting any failures and the
 - When presenting test cases to the user, include the user story ID and test case ID (e.g., US001:TC001) so they can easily reference specific tests.
 - The `analysisIdentifier` (e.g., A001) is different from the suite UUID. You need both for dispatching agents — the UUID to identify the suite and the identifier for the specific analysis run.
 - Reusable test cases (R001:RTC001 etc.) can be referenced across multiple user stories — they're useful for common flows like login.
+- For status questions, prefer the purpose-built read tools (`wopee_fetch_test_inventory`, `wopee_fetch_recent_executions`) over re-crawling or re-generating — they are faster, cheaper, and authoritative.
 
 ## Troubleshooting
 
@@ -164,6 +197,7 @@ Present results to the user in a clear format, highlighting any failures and the
 | `wopee_dispatch_analysis` returns but no artifacts appear | Crawl is still running | Wait 1-2 minutes, then call `wopee_fetch_artifact` to check |
 | `wopee_dispatch_agent` fails with 429 | Rate limit hit | Wait 2 minutes between dispatch calls, apply exponential backoff if needed |
 | Artifact content is empty or incomplete | Generated too early — previous artifact not ready | Ensure generation order: APP_CONTEXT → USER_STORIES → TEST_CASES |
-| Wrong test suite data returned | Using wrong MCP namespace | Verify prefix is `mcp__Wopee_io_-_FoodDash__wopee_*` |
+| Wrong test suite data returned | Wrong Wopee server/project selected | List suites and verify against the user's expectation; confirm which server to use |
 | Suite UUID not found | Using analysis identifier instead of UUID | Call `wopee_fetch_analysis_suites` to resolve A001 → UUID |
 | Agent dispatched but status stays `IN_PROGRESS` | Test execution takes time | Wait 30-60 seconds, then call `wopee_fetch_executed_test_cases` again |
+| Inventory and executed-results counts disagree | Executed-results only covers dispatched runs | Treat `wopee_fetch_test_inventory` as authoritative; it includes `NOT_RUN` tests |
