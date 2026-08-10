@@ -6,12 +6,12 @@ Four AI coding agents, one testing workflow. Each demo folder is a checklist-sty
 
 ## Demos
 
-| Demo                                         | Tool           | Maker     | Type                                   |
-| -------------------------------------------- | -------------- | --------- | -------------------------------------- |
-| [GitHub Copilot](./GitHubCopilot-demo/)      | GitHub Copilot | GitHub    | VS Code extension (+ JetBrains, CLI)   |
-| [Cursor](./Cursor-demo/)                     | Cursor         | Anysphere | Standalone IDE (VS Code fork) + cloud  |
-| [Claude Code](./ClaudeCode-demo/)            | Claude Code    | Anthropic | Terminal CLI + IDE extensions + web    |
-| [OpenCode](./OpenCode-demo/)                 | OpenCode       | Anomaly   | Open-source terminal TUI + CLI         |
+| Demo                               | Tool           | Maker     | Type                                  |
+| ---------------------------------- | -------------- | --------- | ------------------------------------- |
+| [GitHub Copilot](./GitHubCopilot/) | GitHub Copilot | GitHub    | VS Code extension (+ JetBrains, CLI)  |
+| [Cursor](./Cursor/)                | Cursor         | Anysphere | Standalone IDE (VS Code fork) + cloud |
+| [Claude Code](./ClaudeCode/)       | Claude Code    | Anthropic | Terminal CLI + IDE extensions + web   |
+| [OpenCode](./OpenCode/)            | OpenCode       | Anomaly   | Open-source terminal TUI + CLI        |
 
 ## Comparison (August 2026)
 
@@ -44,6 +44,6 @@ All four demos push the same practices, so your repo setup transfers:
 
 ## Suggested Flow (for this workshop)
 
-1. Start with the [GitHub Copilot demo](./GitHubCopilot-demo/) - most attendees have it already.
-2. Pick one challenger - [Cursor](./Cursor-demo/), [Claude Code](./ClaudeCode-demo/), or [OpenCode](./OpenCode-demo/) - and repeat the same "Try It Yourself" steps in your Lovable repo.
+1. Start with the [GitHub Copilot demo](./GitHubCopilot/) - most attendees have it already.
+2. Pick one challenger - [Cursor](./Cursor/), [Claude Code](./ClaudeCode/), or [OpenCode](./OpenCode/) - and repeat the same "Try It Yourself" steps in your Lovable repo.
 3. Compare: quality of generated tests, number of approval clicks, cost visibility, and how much setup travels with the repo.
