@@ -46,7 +46,7 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
    - `.github/agents/playwright-test-{planner,generator,healer}.agent.md` - the three Copilot custom agents
    - `.vscode/mcp.json` - the `playwright-test` MCP server entry (VS Code's `servers` key)
    - `specs/` (with a README) - where plans will land
-   - `tests/seed.spec.ts` - the bootstrap test (an empty stub for now)
+   - `tests/seed.spec.ts` - the bootstrap test (a stub inside a `test.describe('Test group')` block)
    - `.github/prompts/playwright-test-*.prompt.md` - reusable prompt templates (thanks to `--prompts`)
    - `.github/workflows/copilot-setup-steps.yml` - CI setup for the Copilot cloud coding agent
 
@@ -116,7 +116,7 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
 2. **Auth flow** - have the planner explore `https://foodora.lovable.app/auth` and plan negative sign-in scenarios (wrong password, empty fields); generate and run them.
 3. **Plan-first TDD** - write your own `specs/cart.plan.md` by hand (cart badge count, promo banners like "20% OFF orders over $25") and let the generator implement it without the planner. Which plan produced better tests, yours or the agent's?
 4. **Break the app, not the test** - block network requests or test on a slow connection; watch when the healer correctly refuses to "fix" a real bug and uses `test.fixme()`.
-5. **Compare loops** - rerun `init-agents` with `--loop=claude` or `--loop=opencode` (see the [3_AI-Coding-Agents](../../3_AI-Coding-Agents/) cheat sheets) and drive the same plan from another tool.
+5. **Compare loops** - rerun `init-agents` with `--loop=claude`, `--loop=opencode`, `--loop=codex`, or `--loop=copilot` (see the [3_AI-Coding-Agents](../../3_AI-Coding-Agents/) cheat sheets) and drive the same plan from another tool.
 6. **Token-efficient alternative** - the [Playwright Agent CLI](https://playwright.dev/agent-cli/introduction), the headless skills-based path recommended for coding agents. This is the whole of [Experiment 4.5](../5-PlaywrightCLI/) - continue there.
 
 ## Gotchas
@@ -127,6 +127,7 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
 - `init-agents` reuses any test file with "seed" in its name; watch out in repos that already have one.
 - Older setups used `.github/chatmodes/*.chatmode.md`; that format is legacy now (`--loop=vscode-legacy`). Current VS Code wants `.github/agents/*.agent.md`.
 - The MCP server runs **headed** by default; add `--headless` to its args in `.vscode/mcp.json` for CI or displayless machines.
+- The generated `copilot-setup-steps.yml` ships with a broken build step (`npx run build` - an upstream template bug); customize or remove it before pushing, or the cloud coding agent's setup workflow fails.
 
 ## Sources
 
