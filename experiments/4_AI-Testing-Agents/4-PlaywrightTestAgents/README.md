@@ -44,12 +44,15 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
 
    What appeared:
    - `.github/agents/playwright-test-{planner,generator,healer}.agent.md` - the three Copilot custom agents
-   - `.vscode/mcp.json` - the `playwright-test` MCP server entry
-   - `specs/` - where plans will land
-   - `tests/seed.spec.ts` - the bootstrap test
+   - `.vscode/mcp.json` - the `playwright-test` MCP server entry (VS Code's `servers` key)
+   - `specs/` (with a README) - where plans will land
+   - `tests/seed.spec.ts` - the bootstrap test (an empty stub for now)
    - `.github/prompts/playwright-test-*.prompt.md` - reusable prompt templates (thanks to `--prompts`)
+   - `.github/workflows/copilot-setup-steps.yml` - CI setup for the Copilot cloud coding agent
 
-3. Point the seed test at the SUT - the planner runs it to get a ready-to-use page:
+   The command also prints an `mcpServers` JSON block to paste into GitHub Copilot coding-agent settings; for local VS Code use you can ignore it (`.vscode/mcp.json` is already written).
+
+3. Replace the generated stub (`// generate code here.`) so the seed opens the SUT - the planner runs it to get a ready-to-use page:
 
    ```ts
    // tests/seed.spec.ts
@@ -80,7 +83,7 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
 
 2. Watch: it replays the scenario step by step in the live browser, verifies selectors and assertions as it goes (`browser_verify_*` tools), then writes the spec with `// spec:` and `// seed:` header comments and one comment per plan step.
 3. Repeat for scenario 1.2. **One scenario per invocation, sequentially** - that is the designed workflow.
-4. Run what you got:
+4. Run what you got (delete `tests/example.spec.ts` first, or the playwright.dev demo tests run too):
 
    ```bash
    npx playwright test --reporter=line
@@ -114,7 +117,7 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
 3. **Plan-first TDD** - write your own `specs/cart.plan.md` by hand (cart badge count, promo banners like "20% OFF orders over $25") and let the generator implement it without the planner. Which plan produced better tests, yours or the agent's?
 4. **Break the app, not the test** - block network requests or test on a slow connection; watch when the healer correctly refuses to "fix" a real bug and uses `test.fixme()`.
 5. **Compare loops** - rerun `init-agents` with `--loop=claude` or `--loop=opencode` (see the [3_AI-Coding-Agents](../../3_AI-Coding-Agents/) cheat sheets) and drive the same plan from another tool.
-6. **Token-efficient alternative** - try the [Playwright Agent CLI](https://playwright.dev/agent-cli/introduction) (`npm i -g @playwright/cli`), the headless skills-based path recommended for coding agents; compare token use vs MCP.
+6. **Token-efficient alternative** - the [Playwright Agent CLI](https://playwright.dev/agent-cli/introduction), the headless skills-based path recommended for coding agents. This is the whole of [Experiment 4.5](../5-PlaywrightCLI/) - continue there.
 
 ## Gotchas
 
@@ -123,6 +126,7 @@ Under the hood they talk to a bundled MCP server (`npx playwright run-test-mcp-s
 - The app must be reachable - planner, generator, and healer all drive a live browser.
 - `init-agents` reuses any test file with "seed" in its name; watch out in repos that already have one.
 - Older setups used `.github/chatmodes/*.chatmode.md`; that format is legacy now (`--loop=vscode-legacy`). Current VS Code wants `.github/agents/*.agent.md`.
+- The MCP server runs **headed** by default; add `--headless` to its args in `.vscode/mcp.json` for CI or displayless machines.
 
 ## Sources
 
