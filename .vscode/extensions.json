@@ -1,3 +1,6 @@
 {
-  "recommendations": ["GitHub.copilot-chat"]
+  "recommendations": [
+    "GitHub.copilot-chat",
+    "ms-playwright.playwright"
+  ]
 }
