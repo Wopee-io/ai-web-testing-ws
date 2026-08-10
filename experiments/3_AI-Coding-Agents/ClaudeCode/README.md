@@ -56,7 +56,7 @@ Commit these per repo so the whole team gets the same experience:
 ## 5. Tester Setup (must-have for web app testers)
 
 - [ ] [**Playwright MCP**](https://github.com/microsoft/playwright-mcp) (see §3) - browser control from the accessibility tree
-- [ ] [**Playwright CLI**](https://playwright.dev/docs/getting-started-cli) - token-efficient alternative: `npm i -g @playwright/cli@latest`, then `playwright-cli install --skills` adds a ready-made Claude Code skill (~4x fewer tokens than MCP)
+- [ ] [**Playwright CLI**](https://playwright.dev/docs/getting-started-cli) - token-efficient alternative: bundled with Playwright 1.62+ (`npx playwright cli`); `npx playwright init-skills --loop=claude` adds ready-made Claude Code skills (~4x fewer tokens than MCP). Standalone: `npm i -g @playwright/cli@latest`
 - [ ] **Test-loop hook** - `PostToolUse` hook matching `Edit|Write` that runs lint/tests after every edit; a failing exit blocks and feeds the error back = self-healing tests
 - [ ] **Bundled review skills** - `/code-review`, `/security-review`
 
