@@ -1,4 +1,4 @@
-# Experiment 4.2: Testing with Wopee.io
+# Experiment 3.2: Testing with Wopee.io
 
 ## Introduction to Wopee.io - demo (try to follow)
 
