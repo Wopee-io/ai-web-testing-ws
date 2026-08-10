@@ -72,6 +72,8 @@ Artifacts must be generated in a specific order because each layer builds on the
 
 For each artifact type, call `wopee_generate_artifact` with the suite UUID and the type. Generation is asynchronous — after triggering it, use `wopee_fetch_artifact` to check if the content is ready.
 
+**Polling discipline (applies to crawls, generation, and agent runs):** never poll in a tight loop. Wait 30-60 seconds between status checks (crawls typically take 1-2 minutes, agent runs 30-60 seconds per test). If nothing changed after ~5 checks, stop and tell the user what is still running rather than burning turns on further polling.
+
 **To review artifacts**, call `wopee_fetch_artifact` with the suite UUID and one of these types:
 - `APP_CONTEXT` — returns the application context report (markdown)
 - `GENERAL_USER_STORIES` — returns high-level user stories (markdown)
